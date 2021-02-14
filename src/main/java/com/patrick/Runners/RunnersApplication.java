@@ -6,15 +6,16 @@ import java.util.Set;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.google.common.collect.Lists;
-import com.patrick.Runners.auth.AuthDaoService;
 import com.patrick.Runners.auth.Role;
 import com.patrick.Runners.auth.User;
 
 @SpringBootApplication
-public class RunnersApplication {
+public class RunnersApplication extends SpringBootServletInitializer {
 
 	private static PasswordEncoder passwordEncoder;
 
@@ -24,6 +25,11 @@ public class RunnersApplication {
 
 	public enum roles{
 		ADMIN, CONTRIBUTOR
+	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(RunnersApplication.class);
 	}
 
 	public static void main(String[] args) {
