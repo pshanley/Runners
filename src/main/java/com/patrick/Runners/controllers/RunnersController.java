@@ -10,9 +10,10 @@ import java.util.List;
 import com.patrick.Runners.runner.Runner;
 import com.patrick.Runners.runner.RunnersDao;
 
-@RestController
+@Controller
 public class RunnersController {
-  @RequestMapping("/list_runners")
+
+  @RequestMapping("/")
   public String listRunner(Model model) {
 
     RunnersDao business = new RunnersDao();

@@ -50,7 +50,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
         .and()
         .formLogin().permitAll()
         .and()
-        .logout().permitAll();
+        .logout().permitAll()
+        .and()
+        .exceptionHandling().accessDeniedPage("/403.html");
+
   }
 
 }
