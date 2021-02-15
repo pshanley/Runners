@@ -31,7 +31,7 @@ public class RunnersDaoTest {
 
   @Test
   public void addRunnerToDB(){
-    RunnersDaoService.addRunner(runner);
+    //RunnersDaoService.saveRunner(runner);
 
   }
 

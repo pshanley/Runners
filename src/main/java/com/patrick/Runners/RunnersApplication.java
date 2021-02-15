@@ -20,24 +20,24 @@ import com.patrick.Runners.runner.Runner;
 import com.patrick.Runners.runner.RunnerRepository;
 
 @SpringBootApplication
-public class RunnersApplication{
+public class RunnersApplication {
 
 	private static PasswordEncoder passwordEncoder;
 
 	public RunnersApplication(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
+
 	public static RunnerRepository runnerRepository;
-	public enum roles{
+
+	public enum roles {
 		ADMIN, CONTRIBUTOR
 	}
-
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(RunnersApplication.class, args);
 
-		Role admin_role = new Role(roles.ADMIN.name());
+		/*Role admin_role = new Role(roles.ADMIN.name());
 		Role contributor_role = new Role(roles.CONTRIBUTOR.name());
 
 		Set<Role> admin = new HashSet<Role>();
@@ -55,7 +55,7 @@ public class RunnersApplication{
 
 		AuthDaoService.addNewUser(admin_user);
 		AuthDaoService.addNewUser(contributor_user);
-		AuthDaoService.addNewUser(contributor_user2);*/
+		AuthDaoService.addNewUser(contributor_user2);
 
 
 
@@ -66,7 +66,7 @@ public class RunnersApplication{
 	@Bean
 	public CommandLineRunner demo(RunnerRepository runnerRepository){
 		return (args) -> {
-			runnerRepository.save(new Runner("Patrick3", "hanley", "instagramName"));
+			//runnerRepository.save(new Runner("Patrick3", "hanley", "instagramName"));
 		};
 	}
 
@@ -101,7 +101,7 @@ public class RunnersApplication{
 						passwordEncoder.encode("password"),
 						admin)
 				//ADMINTRAINEE.getGrantedAuthorities())
-		);*/
+		)
 
 		return null;
 	}
@@ -114,6 +114,7 @@ public class RunnersApplication{
 		return roles;
 	}
 
+*/
 
-
+	}
 }
