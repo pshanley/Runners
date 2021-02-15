@@ -23,4 +23,8 @@
         </tr>
         </c:forEach>
     </table>
+
+    <form action="addRunner.jsp">
+        <input type="submit" value="Add Another Runner" />
+    </form>
 </body>

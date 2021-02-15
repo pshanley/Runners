@@ -4,33 +4,35 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.google.common.collect.Lists;
 import com.patrick.Runners.auth.Role;
 import com.patrick.Runners.auth.User;
+import com.patrick.Runners.runner.Runner;
+import com.patrick.Runners.runner.RunnerRepository;
 
 @SpringBootApplication
-public class RunnersApplication extends SpringBootServletInitializer {
+public class RunnersApplication{
 
 	private static PasswordEncoder passwordEncoder;
 
 	public RunnersApplication(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
-
+	public static RunnerRepository runnerRepository;
 	public enum roles{
 		ADMIN, CONTRIBUTOR
 	}
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(RunnersApplication.class);
-	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(RunnersApplication.class, args);
@@ -60,6 +62,15 @@ public class RunnersApplication extends SpringBootServletInitializer {
 
 
 	}
+
+	@Bean
+	public CommandLineRunner demo(RunnerRepository runnerRepository){
+		return (args) -> {
+			runnerRepository.save(new Runner("Patrick3", "hanley", "instagramName"));
+		};
+	}
+
+
 
 
 
