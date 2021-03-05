@@ -25,7 +25,7 @@
         </c:forEach>
     </table><br><br>
 
-    <form action="/register" style="margin-left: 100px">
+    <form action="/addRunnerForm" style="margin-left: 100px">
         <input type="submit" value="Add Another Runner" />
     </form>
 </body>

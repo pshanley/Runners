@@ -2,6 +2,7 @@ package com.patrick.Runners.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,7 +30,8 @@ public class RunnersController {
     return "runners";
   }
 
-  @GetMapping("/register")
+  @GetMapping("/addRunnerForm")
+  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
   public String showAddRunnerForm(Model model) {
     Runner runner = new Runner();
 
@@ -40,8 +42,8 @@ public class RunnersController {
   }
 
   @PostMapping("/addRunner")
+  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
   public String submitAddRunnerForm(@ModelAttribute("runner") Runner newRunner){
-    //System.out.println(newRunner.getFirstName() + " " + newRunner.getUsername()); // this getUsername returns null
     Runner runner = new Runner(newRunner.getFirstName(), newRunner.getLastName(), newRunner.getInstagramHandle()); // a runner object was not default created, I had to call the Runner consturctor myself
     saveRunner(runner);
     return "addRunnerSuccess";
@@ -50,8 +52,5 @@ public class RunnersController {
   public void saveRunner(Runner runner){
     RunnersDaoService.saveRunner(runner); // did not need to Autowire/inject RunnersDaoService here
   }
-
-
-
 
 }
