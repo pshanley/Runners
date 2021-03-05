@@ -1,3 +1,22 @@
 < Tuesday 3/4/2021 - Able to add runners to DB from frontend
 Tuesday 3/4/2021 - gets the runners from RDBMS
 
+
+To Do:
+
+Users Management
+* Form to Register Users
+* Page that shows all users
+    * Only viewable to Admins
+    * Maybe an approval process? I can approve users
+
+Runners
+* Add instagram followers count and Instagram Icon
+* Integrate with Cypress
+* Individual records for each runner? Add PRs?
+
+Infra
+* Container
+
+
+

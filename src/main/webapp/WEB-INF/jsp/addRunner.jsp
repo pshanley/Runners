@@ -48,6 +48,9 @@
 
             <form:button>Add Runner</form:button>
         </form:form>
+            <form action="/" style="text-align: center">
+                <input type="submit" value="Back to Runners"  />
+            </form>
     </div>
 </body>
 </html>
