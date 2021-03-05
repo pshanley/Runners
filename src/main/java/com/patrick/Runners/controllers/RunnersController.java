@@ -1,7 +1,6 @@
 package com.patrick.Runners.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +11,8 @@ import org.springframework.ui.Model;
 
 import java.util.List;
 
+import com.patrick.Runners.instagram.GetInstagramDetails;
 import com.patrick.Runners.runner.Runner;
-import com.patrick.Runners.runner.RunnerRepository;
 import com.patrick.Runners.runner.RunnersDaoService;
 
 @Controller
@@ -43,9 +42,14 @@ public class RunnersController {
 
   @PostMapping("/addRunner")
   @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
-  public String submitAddRunnerForm(@ModelAttribute("runner") Runner newRunner){
+  //public String submitAddRunnerForm(@ModelAttribute("runner") Runner newRunner){
+  public String submitAddRunnerForm(Runner newRunner){
+
     Runner runner = new Runner(newRunner.getFirstName(), newRunner.getLastName(), newRunner.getInstagramHandle()); // a runner object was not default created, I had to call the Runner consturctor myself
+    GetInstagramDetails.getInstagramDetails(runner);
     saveRunner(runner);
+    System.out.println(runner.getInstagramHandle() + "has this many followers: " + runner.getFollowersCount());
+
     return "addRunnerSuccess";
   }
 

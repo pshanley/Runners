@@ -14,13 +14,16 @@
     <br/>
     <table>
         <tr>
-            <th>First Name</th><th>Last Name</th><th>Instagram Handle</th>
+            <th>Pic</th><th>Name</th><th>Instagram Handle</th><th>Number of Followers</th>
         </tr>
         <c:forEach var="runner" items="${runners}">
         <tr>
-            <td>${runner.firstName}</td>
-            <td>${runner.lastName}</td>
-            <td>${runner.instagramHandle}</td>
+            <td style="text-align:center;width: 20%"><img alt="" height=40  src=${runner.imageURL}></td>
+            <td>${runner.firstName} ${runner.lastName}</td>
+            <td><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></td>
+            <td>${runner.followersCount}</td>
+
+
         </tr>
         </c:forEach>
     </table><br><br>

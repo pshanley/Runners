@@ -19,6 +19,10 @@
         <span>First Name:</span><span>${runner.firstName}</span><br/>
         <span>Last Name:</span><span>${runner.lastName}</span><br/>
         <span>Instagram Handle:</span><span>${runner.instagramHandle}</span><br/>
+        </p>Number of Followers: ${runner.followersCount}</p><br/>
+        <span>Number of Followers:</span><span>${runner}</span><br/>
+
+
     </div><br><br>
 
     <form action="/" style="text-align: center">

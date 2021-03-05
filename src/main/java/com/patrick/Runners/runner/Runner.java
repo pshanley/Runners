@@ -29,6 +29,7 @@ public class Runner implements Serializable {
     this.lastName = lastName;
     this.instagramHandle = instagramHandle;
     this.username = firstName.toUpperCase() + "_" + lastName.toUpperCase();
+
   }
 
   public String getFirstName() {
