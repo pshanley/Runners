@@ -7,13 +7,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Contact List - Spring Boot Web Application Example</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1 align="center">List of Runners</h1>
     <br/>
-    <table border="1" cellpadding="10">
+    <table>
         <tr>
-            <th>Name</th><th>Email</th><th>Country</th>
+            <th>First Name</th><th>Last Name</th><th>Instagram Handle</th>
         </tr>
         <c:forEach var="runner" items="${runners}">
         <tr>
@@ -22,9 +23,9 @@
             <td>${runner.instagramHandle}</td>
         </tr>
         </c:forEach>
-    </table>
+    </table><br><br>
 
-    <form action="/register">
+    <form action="/register" style="margin-left: 100px">
         <input type="submit" value="Add Another Runner" />
     </form>
 </body>

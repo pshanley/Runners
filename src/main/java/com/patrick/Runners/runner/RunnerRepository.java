@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface RunnerRepository extends CrudRepository<Runner, Long> {
+  List<Runner> findAll();
+
 
 }

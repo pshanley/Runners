@@ -2,6 +2,7 @@ package com.patrick.Runners.runner;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.google.common.collect.Lists;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -34,11 +35,7 @@ public class RunnersDaoService {
 
 
   public List<Runner> getRunnersList() {
-    List<Runner> listRunners = new ArrayList<>();
-    listRunners.add(new Runner("Drew", "Hunter", "drewhunter00"));
-    listRunners.add(new Runner("Mo", "Farah", "gomofarah"));
-    listRunners.add(new Runner("Galen", "Rupp", "galen_goat"));
-
+    List<Runner> listRunners = repo.findAll();
     return listRunners;
   }
 
