@@ -10,40 +10,14 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class InstagramConnectionManager {
+public class LoadCookies {
 
-  private static final Logger LOG = LoggerFactory.getLogger(InstagramConnectionManager.class.getName());
+  private static final Logger LOG = LoggerFactory.getLogger(LoadCookies.class.getName());
 
   // idk if these file locations will have to go somewhere under target once its running in tomcat
-  public static final String csrfFilePath = "/Users/patrick.hanley/repo/personal/InstagramRunners/src/main/resources/cookies/csrf.json";
-  public static final String sessonIdFilePath = "/Users/patrick.hanley/repo/personal/InstagramRunners/src/main/resources/cookies/sessionid.json";
+  public static final String csrfFilePath = "/Users/patrick.hanley/repo/personal/Runners/src/main/resources/cookies/csrf.json";
+  public static final String sessonIdFilePath = "/Users/patrick.hanley/repo/personal/Runners/src/main/resources/cookies/sessionid.json";
   public static final String drew_hunter = "drewhunter00";
-  public static void main(String[] args)  {
-  }
-
-  // if I can get Drew Hunter's follower count, connection is good. If not, run cypress and get cookies
-  /*public static org.json.JSONObject checkConnection(String instagramHandle) throws IOException, InterruptedException {
-
-    org.json.JSONObject jsonResponse = null;
-    // this is making a cookies object from the current JSON files, then actually making a request.
-    // But its returning the cookies that they work and then GetFollowerCount makes anotehr Request
-    Cookies cookies = cookieFactory(); // makes a cookie object from the current cookie.json files
-    try{
-
-      jsonResponse = GetFollowerCount.MakeInstagramRequest(instagramHandle, cookies);
-      return  jsonResponse;
-
-    } catch (NullPointerException e){
-      LOG.info("Cannot connect to instagram, running cypress.");
-      GenerateCookies.RunCypress();
-      Cookies newCookies = cookieFactory();
-      jsonResponse = GetFollowerCount.MakeInstagramRequest(instagramHandle, newCookies);
-      return jsonResponse;
-    }
-
-  }*/
-
-
 
   public static Cookies cookieFactory(){
     String sessionid = readSessionId();
@@ -86,8 +60,6 @@ public class InstagramConnectionManager {
     }
     return sessionid;
   }
-
-
 
 }
 

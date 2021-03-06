@@ -1,5 +1,7 @@
 package com.patrick.Runners.instagram;
 
+import java.io.IOException;
+
 import org.json.JSONObject;
 
 import com.patrick.Runners.runner.Runner;
@@ -10,7 +12,7 @@ public class GetInstagramDetails {
 
 
 
-  public static void getInstagramDetails(Runner runner){
+  public static void getInstagramDetails(Runner runner) throws IOException, InterruptedException {
     JSONObject instagramResponseJSON = InstagramRequest.makeGetRequest(runner.getInstagramHandle());
 
     String profilePicUrl = InstagramParsing.returnProfilePicURL(instagramResponseJSON);

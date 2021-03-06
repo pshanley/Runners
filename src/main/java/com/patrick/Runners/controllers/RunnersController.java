@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.patrick.Runners.instagram.GetInstagramDetails;
@@ -41,7 +42,8 @@ public class RunnersController {
 
   @PostMapping("/addRunner")
   //@PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
-  public String submitAddRunnerForm(@ModelAttribute("runner") Runner runner){
+  public String submitAddRunnerForm(@ModelAttribute("runner") Runner runner)
+      throws IOException, InterruptedException {
     runner.setUsername(runner.getFirstName().toUpperCase() + "_" + runner.getLastName().toUpperCase());
     GetInstagramDetails.getInstagramDetails(runner);
     saveRunner(runner);
