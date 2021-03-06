@@ -30,10 +30,9 @@ public class RunnersController {
   }
 
   @GetMapping("/addRunnerForm")
-  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
+  //@PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
   public String showAddRunnerForm(Model model) {
     Runner runner = new Runner();
-
     model.addAttribute("runner",runner);
     System.out.println("redirecting to addRunner form");
     return "addRunner";
@@ -41,15 +40,12 @@ public class RunnersController {
   }
 
   @PostMapping("/addRunner")
-  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
-  //public String submitAddRunnerForm(@ModelAttribute("runner") Runner newRunner){
-  public String submitAddRunnerForm(Runner newRunner){
-
-    Runner runner = new Runner(newRunner.getFirstName(), newRunner.getLastName(), newRunner.getInstagramHandle()); // a runner object was not default created, I had to call the Runner consturctor myself
+  //@PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
+  public String submitAddRunnerForm(@ModelAttribute("runner") Runner runner){
+    runner.setUsername(runner.getFirstName().toUpperCase() + "_" + runner.getLastName().toUpperCase());
     GetInstagramDetails.getInstagramDetails(runner);
     saveRunner(runner);
     System.out.println(runner.getInstagramHandle() + "has this many followers: " + runner.getFollowersCount());
-
     return "addRunnerSuccess";
   }
 
