@@ -12,7 +12,7 @@
 <body>
     <h1 align="center">List of Runners</h1>
     <br/>
-    <table>
+    <table align="center">
         <tr>
             <th>Pic</th><th>Name</th><th>Instagram Handle</th><th>Number of Followers</th>
         </tr>
@@ -28,7 +28,10 @@
         </c:forEach>
     </table><br><br>
 
-    <form action="/addRunnerForm" style="margin-left: 100px">
-        <input type="submit" value="Add Another Runner" />
+    <form align="center" action="/addRunnerForm">
+        <input type="submit" value="Add A Runner" />
+    </form><br>
+    <form align="center" action="/registerUserForm">
+        <input type="submit" value="Become a Contributor" />
     </form>
 </body>

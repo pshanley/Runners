@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 import com.patrick.Runners.instagram.GetInstagramDetails;
@@ -24,14 +25,14 @@ public class RunnersController {
 
     RunnersDaoService business = new RunnersDaoService();
     List<Runner> runnersList = business.getRunnersList();
-
+    runnersList.sort(Comparator.comparing(Runner::getFollowersCount).reversed());
     model.addAttribute("runners", runnersList);
 
     return "runners";
   }
 
   @GetMapping("/addRunnerForm")
-  //@PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
+  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
   public String showAddRunnerForm(Model model) {
     Runner runner = new Runner();
     model.addAttribute("runner",runner);
@@ -41,7 +42,7 @@ public class RunnersController {
   }
 
   @PostMapping("/addRunner")
-  //@PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
+  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
   public String submitAddRunnerForm(@ModelAttribute("runner") Runner runner)
       throws IOException, InterruptedException {
     runner.setUsername(runner.getFirstName().toUpperCase() + "_" + runner.getLastName().toUpperCase());

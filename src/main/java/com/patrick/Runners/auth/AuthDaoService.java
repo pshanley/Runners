@@ -44,6 +44,7 @@ public class AuthDaoService implements UserDao{
     roleRepository.save(role);
   }
   // This runs when someone tries to login
+
   private List<User> getApplicationUsers(){
     List<User> applicationUsers =  userRepository.findAll();
     System.out.println("Found the following users: ");

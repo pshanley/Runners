@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Registration Success</title>
+<title>Runner Successfully Added</title>
 <style type="text/css">
     span {
         display: inline-block;
@@ -20,11 +20,15 @@
         <span>Last Name:</span><span>${runner.lastName}</span><br/>
         <span>Instagram Handle:</span><span>${runner.instagramHandle}</span><br/>
         <span>Number of Followers:</span><span>${runner.followersCount}</span><br/>
-        <span>Image:</span><span>${runner.imageURL}</span><br/>
+        <span>Image:</span><span><img alt="" height=40  src=${runner.imageURL}></span><br/>
     </div><br><br>
 
-    <form action="/" style="text-align: center">
+    <form action="/" align="center" >
         <input type="submit" value="View Runners" />
+    </form><br>
+    <form align="center" action="/addRunnerForm" >
+        <input type="submit" value="Add Another Runner" />
     </form>
+
 </body>
 </html>

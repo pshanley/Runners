@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>User Registration Form</title>
+<title>Add a Runner</title>
 <style type="text/css">
     label {
         display: inline-block;

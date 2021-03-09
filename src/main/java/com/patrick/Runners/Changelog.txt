@@ -11,12 +11,11 @@ Users Management
     * Maybe an approval process? I can approve users
 
 Runners
-* Add instagram followers count and Instagram Icon
-* Integrate with Cypress
+* Create New Cypress, currently using local cypress-202 project
 * Individual records for each runner? Add PRs?
 
 Infra
-* Container
+* Put project in a container
 
 
 

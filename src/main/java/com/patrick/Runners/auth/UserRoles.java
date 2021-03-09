@@ -1,2 +1,9 @@
-package com.patrick.Runners.auth;public class UserRoles {
+package com.patrick.Runners.auth;
+
+public enum UserRoles {
+
+    ADMIN, CONTRIBUTOR
+
+
+
 }
