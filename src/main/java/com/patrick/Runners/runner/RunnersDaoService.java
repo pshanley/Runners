@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+
 @Service // this creates a Singleton
 public class RunnersDaoService {
 
   private ApplicationContext context;
+  @Autowired
   public static RunnerRepository repo;
 
   public RunnersDaoService() {
@@ -38,6 +40,7 @@ public class RunnersDaoService {
     List<Runner> listRunners = repo.findAll();
     return listRunners;
   }
+
 
 
 }

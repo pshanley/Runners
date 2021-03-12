@@ -33,5 +33,8 @@
     </form><br>
     <form align="center" action="/registerUserForm">
         <input type="submit" value="Become a Contributor" />
+    </form><br>
+    <form action="/teams" style="text-align: center">
+        <input type="submit" value="View Teams"  />
     </form>
 </body>

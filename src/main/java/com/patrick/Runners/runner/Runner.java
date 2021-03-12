@@ -6,8 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.transaction.Transactional;
+
+import com.patrick.Runners.teams.Team;
 
 @Entity
+@Transactional
 public class Runner implements Serializable {
 
   @Id
@@ -21,6 +27,11 @@ public class Runner implements Serializable {
   private String imageURL;
 
 
+
+  @ManyToOne
+  @JoinColumn(name = "team_id")
+  private Team team;
+
   public Runner() {
   }
 
@@ -29,6 +40,16 @@ public class Runner implements Serializable {
     this.lastName = lastName;
     this.instagramHandle = instagramHandle;
     this.username = firstName.toUpperCase() + "_" + lastName.toUpperCase();
+
+  }
+
+
+  public Runner(String firstName, String lastName, String instagramHandle, Team team) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.instagramHandle = instagramHandle;
+    this.username = firstName.toUpperCase() + "_" + lastName.toUpperCase();
+    this.team = team;
 
   }
 
@@ -78,5 +99,13 @@ public class Runner implements Serializable {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public Team getTeam() {
+    return team;
+  }
+
+  public void setTeam(Team team) {
+    this.team = team;
   }
 }
