@@ -41,6 +41,11 @@ public class RunnersDaoService {
     return listRunners;
   }
 
+  public Runner getSingleRunner(String username){
+    Runner runner = repo.findByUsername(username);
+    return runner;
+  }
+
 
 
 }

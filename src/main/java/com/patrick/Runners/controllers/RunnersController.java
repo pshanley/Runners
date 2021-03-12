@@ -1,13 +1,16 @@
 package com.patrick.Runners.controllers;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -20,10 +23,12 @@ import com.patrick.Runners.runner.RunnersDaoService;
 @Controller
 public class RunnersController {
 
+  RunnersDaoService business = new RunnersDaoService();
+
   @RequestMapping("/")
   public String listRunner(Model model) {
 
-    RunnersDaoService business = new RunnersDaoService();
+
     List<Runner> runnersList = business.getRunnersList();
     runnersList.sort(Comparator.comparing(Runner::getFollowersCount).reversed());
     model.addAttribute("runners", runnersList);
@@ -54,6 +59,14 @@ public class RunnersController {
 
   public void saveRunner(Runner runner){
     RunnersDaoService.saveRunner(runner); // did not need to Autowire/inject RunnersDaoService here
+  }
+
+  @RequestMapping(value = "/runners/{runnerName}", method = RequestMethod.GET)
+  public String getRunner(@PathVariable("runnerName") String username){
+    System.out.println(username);
+    Runner runner = business.getSingleRunner(username);
+    System.out.println(runner.getInstagramHandle());
+    return "runners";
   }
 
 
