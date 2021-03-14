@@ -4,6 +4,7 @@ package com.patrick.Runners.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -61,12 +65,15 @@ public class RunnersController {
     RunnersDaoService.saveRunner(runner); // did not need to Autowire/inject RunnersDaoService here
   }
 
-  @RequestMapping(value = "/runners/{runnerName}", method = RequestMethod.GET)
-  public String getRunner(@PathVariable("runnerName") String username){
+  @RequestMapping(value = "/runners", method = RequestMethod.GET)
+  public ModelAndView getRunner(@RequestParam String username){
     System.out.println(username);
     Runner runner = business.getSingleRunner(username);
     System.out.println(runner.getInstagramHandle());
-    return "runners";
+    ModelAndView modelAndView = new ModelAndView("runner");
+    modelAndView.addObject("runner",runner);
+
+    return modelAndView;
   }
 
 
