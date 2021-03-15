@@ -23,12 +23,32 @@ import com.patrick.Runners.teams.TeamRepository;
 public class TeamTest {
 
 
+
   @Test
   public void createTeam(){
     ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(RunnersApplication.class);
     TeamRepository teamRepository = configurableApplicationContext.getBean(TeamRepository.class);
     Team team = new Team("Bowerman Track Club");
     teamRepository.save(team);
+  }
+
+  @Test
+  public void getSingleTeam(){
+    ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(RunnersApplication.class);
+    TeamRepository teamRepository = configurableApplicationContext.getBean(TeamRepository.class);
+
+    Team team = teamRepository.findByTeamName("Nike Oregon Project");
+    System.out.println(team.getTeamName());
+    System.out.println(team.getAthletes());
+
+    List<Runner> runners = team.getAthletes();
+    for(Runner r : runners){
+      System.out.println(r.getUsername());
+    }
+
+
+
+
   }
 
   @Test

@@ -34,7 +34,9 @@ public class RunnersController {
 
 
     List<Runner> runnersList = business.getRunnersList();
+    System.out.println(runnersList);
     runnersList.sort(Comparator.comparing(Runner::getFollowersCount).reversed());
+    System.out.println("Type of List Object: " + runnersList.getClass());
     model.addAttribute("runners", runnersList);
 
     return "runners";

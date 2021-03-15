@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +36,9 @@ public class Team implements Serializable {
   @OneToMany(
       mappedBy="team", // reference field in Runner
       cascade = {CascadeType.MERGE}, // Updating a team will update runners in the DB
-      orphanRemoval = false) // removing team will not remove runner
+      orphanRemoval = false, // removing team will not remove runner
+      fetch = FetchType.EAGER // This fetches the athletes when I load a team, I was getting lazy initialization errors w/out it
+  )
   @Column(name="athletes")
   private List<Runner> athletes = new ArrayList<Runner>();
 

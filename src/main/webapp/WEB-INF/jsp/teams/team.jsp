@@ -10,15 +10,18 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1 align="center">List of Professional Running Teams</h1>
+    <h1 align="center">${team.teamName}</h1>
     <br/>
     <table align="center">
         <tr>
-         <th>TeamName</th>
+            <th>Pic</th><th>Name</th><th>Instagram Handle</th><th>Number of Followers</th>
         </tr>
-        <c:forEach var="team" items="${teams}">
+        <c:forEach var="runner" items="${team.athletes}">
         <tr>
-          <td>${team.teamName}</td>
+          <td style="text-align:center;width: 20%"><img alt="" height=40  src=${runner.imageURL}></td>
+                      <td><a href="runners?username=${runner.username}">${runner.firstName} ${runner.lastName}</a></td>
+                      <td><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></td>
+                      <td>${runner.followersCount}</td>
         </tr>
         </c:forEach>
     </table><br><br>

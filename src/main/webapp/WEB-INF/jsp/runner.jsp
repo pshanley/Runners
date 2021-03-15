@@ -30,7 +30,7 @@
     </div><br><br>
 
     <form action="/" align="center" >
-        <input type="submit" value="View Runners" />
+        <input type="submit" value="Back to Runners" />
     </form><br>
     <form align="center" action="/addRunnerForm" >
         <input type="submit" value="Add Another Runner" />

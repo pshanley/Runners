@@ -12,6 +12,7 @@
 <body>
     <h1 align="center">List of Runners</h1>
     <br/>
+
     <table align="center">
         <tr>
             <th>Pic</th><th>Name</th><th>Instagram Handle</th><th>Number of Followers</th>
@@ -19,11 +20,9 @@
         <c:forEach var="runner" items="${runners}">
         <tr>
             <td style="text-align:center;width: 20%"><img alt="" height=40  src=${runner.imageURL}></td>
-            <td>${runner.firstName} ${runner.lastName}</td>
+            <td><a href="runners?username=${runner.username}">${runner.firstName} ${runner.lastName}</a></td>
             <td><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></td>
             <td>${runner.followersCount}</td>
-
-
         </tr>
         </c:forEach>
     </table><br><br>

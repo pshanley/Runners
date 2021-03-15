@@ -33,4 +33,9 @@ public class TeamDaoService {
     List<Team> listTeams = repo.findAll();
     return listTeams;
   }
+
+  public Team getSingleTeam(String teamName){
+    Team team = repo.findByTeamName(teamName);
+    return team;
+  }
 }
