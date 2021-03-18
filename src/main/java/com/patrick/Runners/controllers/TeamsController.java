@@ -25,6 +25,9 @@ import com.patrick.Runners.teams.Team;
 import com.patrick.Runners.teams.TeamDaoService;
 
 @Controller
+@RequestMapping(
+    method={RequestMethod.POST,RequestMethod.GET}
+)
 public class TeamsController {
 
   TeamDaoService teamDaoService = new TeamDaoService();
@@ -73,15 +76,33 @@ public class TeamsController {
   }
 
   @PostMapping("/teams/addRunner")
-  public  String addRunnerToTeam(@RequestParam(name="teamName") String teamName, @RequestParam(name="runner") String runnerName){
+  public ModelAndView addRunnerToTeam(@RequestParam(name="teamName") String teamName, @RequestParam(name="runner") String runnerName){
+    System.out.println("Adding Runner to Team");
     Team team = teamDaoService.getSingleTeam(teamName);
     System.out.println(team.getTeamName());
 
     Runner runner = runnersDaoService.getSingleRunner(runnerName);
     System.out.println(runner.getFirstName());
+    teamDaoService.addRunnerToTeam(team,runner);
 
-    return runner.getUsername();
+    ModelAndView modelAndView = new ModelAndView();
 
+    modelAndView.setViewName("teams/team");
+    //Team team = teamDaoService.getSingleTeam(teamName);
+    System.out.println(team.getTeamName());
+    System.out.println(team.getAthletes());
+    modelAndView.addObject("team",team);
+
+    return modelAndView;
+
+  }
+
+  @GetMapping("/addRunnerToTeamForm")
+  public String showAddRunnerToTeamForm() {
+    //Team team = new Team();
+    //model.addAttribute("team",team);
+    System.out.println("redirecting to addTeam form");
+    return "teams/addRunnerToTeam"; // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above
 
   }
 

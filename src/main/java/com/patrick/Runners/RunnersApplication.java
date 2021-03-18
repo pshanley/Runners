@@ -1,6 +1,7 @@
 package com.patrick.Runners;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,19 +13,20 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.google.common.collect.Lists;
-import com.patrick.Runners.auth.AuthDaoService;
 import com.patrick.Runners.auth.Role;
-import com.patrick.Runners.auth.User;
 import com.patrick.Runners.runner.Runner;
 import com.patrick.Runners.runner.RunnerRepository;
 import com.patrick.Runners.runner.RunnersDaoService;
 import com.patrick.Runners.teams.Team;
 
 @SpringBootApplication
-public class RunnersApplication {
+public class RunnersApplication extends SpringBootServletInitializer {
 
 	private static PasswordEncoder passwordEncoder;
 
@@ -36,28 +38,28 @@ public class RunnersApplication {
 
 	public static RunnersDaoService runnersService = new RunnersDaoService();
 
+	// Need the default constructor to initialize servlets
+	RunnersApplication(){};
+
+
+
 
 	public enum roles {
 		ADMIN, CONTRIBUTOR
 	}
 
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(RunnersApplication.class);
+	}
+
 	public static void main(String[] args) {
-		SpringApplication.run(RunnersApplication.class, args);
 
-		Role admin_role = new Role(roles.ADMIN.name());
-		Set<Role> admin = new HashSet<Role>();
-		admin.add(admin_role);
-
-		Role contributor_role = new Role(roles.CONTRIBUTOR.name());
-		Set<Role> contributor = new HashSet<Role>();
-		contributor.add(contributor_role);
-
+		ApplicationContext ctx = SpringApplication.run(RunnersApplication.class, args);
 
 
 
 	}
-
-
 
 	public static void createTeamWithExistingRunners(){
 		List<Runner> runnersList = runnersService.getRunnersList();
@@ -75,19 +77,7 @@ public class RunnersApplication {
 		nop.setAthletes(athletesOnTeam);
 		System.out.println(nop.getAthletes());
 
-
-
-
 	}
-
-	/*@Bean
-	public CommandLineRunner demo(RunnerRepository runnerRepository){
-		return (args) -> {
-			//runnerRepository.save(new Runner("Patrick3", "hanley", "instagramName"));
-		};
-	}*/
-
-
 
 
 	public static List<Role> createRoles(){
@@ -118,3 +108,8 @@ public class RunnersApplication {
 	}
 
 }
+
+// To Deploy as War:
+// run "mvn package"
+// copy/replace .war file to /Users/patrick.hanley/tomcat-9/webapps
+// This will hot deploy but I got error messages about a potential memory leak from a mysql thread

@@ -53,7 +53,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
         .and()
         .logout().permitAll()
         .and()
-        .exceptionHandling().accessDeniedPage("/403.html");
+        .exceptionHandling().accessDeniedPage("/403.html")
+        .and()
+        .csrf().disable(); // getting "405 - Post Methods are not supported" even if a user was authenticated
 
   }
 

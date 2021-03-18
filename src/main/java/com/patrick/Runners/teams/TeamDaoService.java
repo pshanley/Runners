@@ -38,4 +38,13 @@ public class TeamDaoService {
     Team team = repo.findByTeamName(teamName);
     return team;
   }
+
+  public static void addRunnerToTeam(Team team, Runner runner){
+    List<Runner> runnersOnTeam = team.getAthletes();
+    runnersOnTeam.add(runner);
+    team.setAthletes(runnersOnTeam);
+    runner.setTeam(team);
+    saveTeam(team);
+
+  }
 }

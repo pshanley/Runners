@@ -26,6 +26,10 @@
         </c:forEach>
     </table><br><br>
 
+    <form align="center" action="/addRunnerToTeamForm">
+       <input type="submit" value="Add a Runner to the Team" />
+    </form><br>
+
     <form align="center" action="/addTeamForm">
        <input type="submit" value="Add a Team" />
     </form><br>

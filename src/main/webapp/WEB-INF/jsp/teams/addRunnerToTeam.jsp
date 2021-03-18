@@ -1,36 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Professional Running Clubs</title>
-<link rel="stylesheet" href="styles.css">
+<meta charset="ISO-8859-1">
+<title>Add a Runner to a Team</title>
+<style type="text/css">
+    label {
+        display: inline-block;
+        width: 200px;
+        margin: 5px;
+        text-align: left;
+    }
+    input[type=text], input[type=password], select {
+        width: 200px;
+    }
+    input[type=radio] {
+        display: inline-block;
+        margin-left: 45px;
+    }
+    input[type=checkbox] {
+        display: inline-block;
+        margin-right: 190px;
+    }
+
+    button {
+        padding: 10px;
+        margin: 10px;
+    }
+</style>
 </head>
 <body>
-    <h1 align="center">${team.teamName}</h1>
-    <br/>
+    <div align="center">
+        <h2>Add a Runner to a Team</h2>
 
-        <form:form action="addRunnerToTeam" method="post">
-            <form:label path="runnerName">Runner:</form:label>
-            <form:input path="runnerName"/><br/>
+        <form action="/teams/addRunner" method="POST">
+          <label for="runner">Runner name:</label>
+          <input type="text" id="runner" name="runner"><br><br>
+          <label for="teamName">Team:</label>
+          <input type="text" id="teamName" name="teamName"><br><br>
+          <input type="submit" value="Submit">
+        </form><br>
 
-            <form:label path="team">Team:</form:label>
-            <form:input path="team"/><br/>
 
+        <form action="/teams" style="text-align: center">
+            <input type="submit" value="Back to Teams"  />
+        </form><br>
 
-
-            <form:button>Add Runner to Team</form:button>
-        </form:form>
-
-    <form align="center" action="/addTeamForm">
-       <input type="submit" value="Add a Team" />
-    </form><br>
-
-    <form align="center" action="/">
-        <input type="submit" value="Back to Home" />
-    </form><br>
-
+        <form action="/" style="text-align: center">
+            <input type="submit" value="Home"  />
+        </form><br>
+    </div>
 </body>
+</html>
