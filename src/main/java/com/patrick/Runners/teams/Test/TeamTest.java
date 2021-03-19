@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
-import javax.swing.*;
+
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
@@ -45,8 +46,24 @@ public class TeamTest {
     for(Runner r : runners){
       System.out.println(r.getUsername());
     }
+  }
+
+  @Test
+  public void removeRunnerFromTeam(){
+    ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(RunnersApplication.class);
+    RunnersDaoService runnersDaoService = configurableApplicationContext.getBean(RunnersDaoService.class);
+    TeamDaoService teamDaoService = configurableApplicationContext.getBean(TeamDaoService.class);
+
+    Runner runner = new Runner("Remove","Me","instagramhandle");
+    RunnersDaoService.saveRunner(runner);
+    Team team = teamDaoService.getSingleTeam("Nike Oregon Project");
 
 
+    teamDaoService.addRunnerToTeam(team,runner);
+
+
+
+    teamDaoService.removeRunnerFromTeam(team,runner);
 
 
   }

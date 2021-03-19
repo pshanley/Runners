@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -86,25 +85,54 @@ public class TeamsController {
     teamDaoService.addRunnerToTeam(team,runner);
 
     ModelAndView modelAndView = new ModelAndView();
-
-    modelAndView.setViewName("teams/team");
-    //Team team = teamDaoService.getSingleTeam(teamName);
-    System.out.println(team.getTeamName());
-    System.out.println(team.getAthletes());
+    modelAndView.setViewName("teams/addRunnerToTeam");
     modelAndView.addObject("team",team);
 
-    return modelAndView;
+    List<Runner> athletesNotOnTeam = RunnersDaoService.getAllRunnersNotOnTeam(team);
+    modelAndView.addObject("athletesNotOnTeam", athletesNotOnTeam);
 
+    return modelAndView;  // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above/
+                          // It's retrieving the css from static/teams/styles.css
   }
 
   @GetMapping("/addRunnerToTeamForm")
-  public String showAddRunnerToTeamForm() {
-    //Team team = new Team();
-    //model.addAttribute("team",team);
-    System.out.println("redirecting to addTeam form");
-    return "teams/addRunnerToTeam"; // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above
+  public ModelAndView showAddRunnerToTeamForm(@RequestParam(name="teamName") String teamName) {
+    System.out.println("redirecting to addTeam form for Team: " + teamName);
+    Team team = teamDaoService.getSingleTeam(teamName);
 
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("teams/addRunnerToTeam");
+    modelAndView.addObject("team",team);
+
+    List<Runner> athletesNotOnTeam = RunnersDaoService.getAllRunnersNotOnTeam(team);
+    modelAndView.addObject("athletesNotOnTeam", athletesNotOnTeam);
+
+    // need to create a model and add the team to that
+    return modelAndView;
   }
+
+  @PostMapping("/teams/removeRunner")
+  public ModelAndView removeRunnerFromTeam(@RequestParam(name="teamName") String teamName, @RequestParam(name="runner") String runnerName){
+    System.out.println("Adding Runner to Team");
+    Team team = teamDaoService.getSingleTeam(teamName);
+    System.out.println(team.getTeamName());
+
+    Runner runner = runnersDaoService.getSingleRunner(runnerName);
+    System.out.println(runner.getFirstName());
+    teamDaoService.removeRunnerFromTeam(team,runner);
+
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("teams/addRunnerToTeam");
+    modelAndView.addObject("team",team);
+
+    List<Runner> athletesNotOnTeam = RunnersDaoService.getAllRunnersNotOnTeam(team);
+    modelAndView.addObject("athletesNotOnTeam", athletesNotOnTeam);
+
+    return modelAndView;  // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above/
+    // It's retrieving the css from static/teams/styles.css
+  }
+
+
 
 }
 

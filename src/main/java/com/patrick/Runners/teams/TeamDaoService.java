@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.patrick.Runners.runner.Runner;
 import com.patrick.Runners.runner.RunnerRepository;
+import com.patrick.Runners.runner.RunnersDaoService;
 
 @Service
 public class TeamDaoService {
@@ -15,6 +16,7 @@ public class TeamDaoService {
   private ApplicationContext context;
   @Autowired
   public static TeamRepository repo;
+  public static RunnerRepository runnerRepo;
 
   @Autowired
   public TeamDaoService(ApplicationContext context) {
@@ -25,7 +27,8 @@ public class TeamDaoService {
   public TeamDaoService(){}
 
   public static void saveTeam(Team team){
-    repo.save(team);
+    repo.saveAndFlush(team);
+
     System.out.println("saved the following Runner to RDBMS: " + team.getTeamName());
   }
 
@@ -39,12 +42,25 @@ public class TeamDaoService {
     return team;
   }
 
-  public static void addRunnerToTeam(Team team, Runner runner){
+  public  void addRunnerToTeam(Team team, Runner runner){
     List<Runner> runnersOnTeam = team.getAthletes();
     runnersOnTeam.add(runner);
     team.setAthletes(runnersOnTeam);
     runner.setTeam(team);
     saveTeam(team);
+  }
+
+  public void removeRunnerFromTeam(Team team, Runner runner){
+
+    List<Runner> runnersList = team.getAthletes();
+    runnersList.remove(runner); // this is deleting the object, I don't want that
+    team.setAthletes(runnersList);
+    saveTeam(team);
+
+    // saving the team isn't removing the Team ID from the runner... so I have to set it myself
+    // I might only have to do the following but I want to update the team in memory
+    runner.setTeam(null);
+    RunnersDaoService.saveRunner(runner);
 
   }
 }
