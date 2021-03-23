@@ -17,7 +17,7 @@
              <c:forEach var="runner" items="${team.athletes}">
                  <tr>
                  <td style="text-align:center;width: 20%">
-                   <form action="/teams/removeRunner" method="POST">
+                   <form action="/teams/removeRunnerLocal" method="POST">
                      <input type="hidden" name="runner" value=${runner.username}>
                      <input type="hidden" name="teamName" value="${team.teamName}" />
                      <input type="submit" value="Remove Runner">

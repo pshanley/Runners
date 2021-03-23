@@ -76,7 +76,6 @@ public class RunnersDaoService {
 
     for (Runner r: runnersList){
       if(localRunnersUsernames.contains(r.getUsername())){
-        System.out.println(r.getUsername() + "has been removed from this list");
         runnersToRemove.add(r);
       }
     }
@@ -84,7 +83,6 @@ public class RunnersDaoService {
     for (Runner r: runnersToRemove){
       runnersList.remove(r);
     }
-
 
     return runnersList;
 

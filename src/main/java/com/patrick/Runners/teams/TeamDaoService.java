@@ -50,17 +50,22 @@ public class TeamDaoService {
     saveTeam(team);
   }
 
-  public void removeRunnerFromTeam(Team team, Runner runner){
+  public Team removeRunnerFromTeam(Team team, Runner runner){
 
     List<Runner> runnersList = team.getAthletes();
     runnersList.remove(runner); // this is deleting the object, I don't want that
     team.setAthletes(runnersList);
-    saveTeam(team);
 
     // saving the team isn't removing the Team ID from the runner... so I have to set it myself
     // I might only have to do the following but I want to update the team in memory
     runner.setTeam(null);
-    RunnersDaoService.saveRunner(runner);
+
+    for (Runner r: team.getAthletes()){
+      System.out.println("STILL ON THE TEAM DAO: " + r.getUsername());
+    }
+
+    return team;
+    //RunnersDaoService.saveRunner(runner);
 
   }
 }
