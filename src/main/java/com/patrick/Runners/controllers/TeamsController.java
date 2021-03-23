@@ -31,6 +31,7 @@ public class TeamsController {
 
   TeamDaoService teamDaoService = new TeamDaoService();
   RunnersDaoService runnersDaoService = new RunnersDaoService();
+  public Team localTeam;
 
   @RequestMapping("/teams")
   public ModelAndView listTeams(@RequestParam(required = false) String teamName) {
@@ -131,6 +132,66 @@ public class TeamsController {
     return modelAndView;  // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above/
     // It's retrieving the css from static/teams/styles.css
   }
+
+  // ****************************************************************************** //
+
+  @GetMapping("/showEditTeamForm")
+  public ModelAndView showEditTeamForm(@RequestParam(name="teamName") String teamName) {
+    System.out.println("redirecting to addTeam form for Team: " + teamName);
+    localTeam = teamDaoService.getSingleTeam(teamName);
+    System.out.println("this is the local team" + localTeam.getTeamName());
+
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("teams/editTeamForm");
+    modelAndView.addObject("team",localTeam);
+
+    List<Runner> athletesNotOnTeam = RunnersDaoService.getAllRunnersNotOnTeam(localTeam);
+    modelAndView.addObject("athletesNotOnTeam", athletesNotOnTeam);
+
+    // need to create a model and add the team to that
+    return modelAndView;
+  }
+
+  @PostMapping("/teams/addRunnerLocal")
+  public ModelAndView addRunnerToLocalTeam(@RequestParam(name="teamName") String team, @RequestParam(name="runner") String runnerName){
+    // This method will be called when someone adds a runner to the team on a form, before submitting
+    // Stores a local team object that is not persisted to the database
+    // need to pass in the runners already on the team, and not repeatedly get that from RDBMS (or maybe not, this could just have the change before submitting)
+
+    // This is fetching the team from RDBMS each time and overriding the previous local edition
+    //Team team = teamDaoService.getSingleTeam(teamName);
+
+    System.out.println("THIS IS THE LOCAL TEAM: "+ localTeam.getTeamName());
+    for (Runner r : localTeam.getAthletes()){
+      System.out.println(r.getUsername() + " is on team " + localTeam.getTeamName());
+    }
+
+    Runner runner = runnersDaoService.getSingleRunner(runnerName);
+    //teamDaoService.addRunnerToTeam(team,runner);
+
+    localTeam.addAthletes(runner);
+    runner.setTeam(localTeam);
+    System.out.println(runner.getUsername() + " is on the following team: " + localTeam.getTeamName());
+
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("teams/editTeamForm");
+    modelAndView.addObject("team",localTeam);
+
+    List<Runner> athletesNotOnTeam = RunnersDaoService.getAllRunnersNotOnLocalTeam(localTeam);
+    for(Runner r: localTeam.getAthletes()){
+      System.out.println("RUNNER IS ON THE TEAM: " + r.getUsername());
+    }
+
+    for (Runner r: athletesNotOnTeam){
+      System.out.println("NOT ON TEAM: " + r.getUsername());
+    }
+    modelAndView.addObject("athletesNotOnTeam", athletesNotOnTeam);
+
+    return modelAndView;  // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above/
+    // It's retrieving the css from static/teams/styles.css
+  }
+
+
 
 
 

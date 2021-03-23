@@ -46,7 +46,7 @@ public class RunnersDaoService {
     Runner runner = repo.findByUsername(username);
     return runner;
   }
-
+// Drew hunter is null in Runners List
   public static List<Runner> getAllRunnersNotOnTeam(Team team) {
     List<Runner> runnersList = getRunnersList();
     List<Runner> runnersToRemove = new ArrayList<>(); // can't change the size of a List during for a loop
@@ -62,5 +62,31 @@ public class RunnersDaoService {
     }
 
     return runnersList;
+  }
+
+  public static List<Runner> getAllRunnersNotOnLocalTeam(Team team) {
+    List<Runner> runnersList = getRunnersList();
+    List<Runner> runnersToRemove = new ArrayList<>(); // can't change the size of a List during for a loop
+    List<Runner> localRunnersList = team.getAthletes();
+    List<String> localRunnersUsernames = new ArrayList<>();
+
+    for(Runner r: localRunnersList){
+      localRunnersUsernames.add(r.getUsername());
+    }
+
+    for (Runner r: runnersList){
+      if(localRunnersUsernames.contains(r.getUsername())){
+        System.out.println(r.getUsername() + "has been removed from this list");
+        runnersToRemove.add(r);
+      }
+    }
+
+    for (Runner r: runnersToRemove){
+      runnersList.remove(r);
+    }
+
+
+    return runnersList;
+
   }
 }
