@@ -73,25 +73,29 @@ public class TeamsController {
 
 
   private void saveTeam(Team team) {
-    TeamDaoService.saveTeam(team);
+    teamDaoService.saveTeam(team);
   }
 
-  @PostMapping("/teams/addRunner")
-  public ModelAndView addRunnerToTeam(@RequestParam(name="teamName") String teamName, @RequestParam(name="runner") String runnerName){
-    System.out.println("Adding Runner to Team");
-    Team team = teamDaoService.getSingleTeam(teamName);
-    System.out.println(team.getTeamName());
+  @PostMapping("/teams/saveTeamChanges")
+  public ModelAndView saveTeamChanges(){
+    System.out.println("SAVING TEAM___________SAVING TEAM");
+    //Team team = teamDaoService.getSingleTeam(teamName);
+    //System.out.println(team.getTeamName());
 
-    Runner runner = runnersDaoService.getSingleRunner(runnerName);
-    System.out.println(runner.getFirstName());
-    teamDaoService.addRunnerToTeam(team,runner);
+    //Runner runner = runnersDaoService.getSingleRunner(runnerName);
+    //System.out.println(runner.getFirstName());
+    //teamDaoService.addRunnerToTeam(team,runner);
+    for(Runner r: localTeam.getAthletes()){
+      System.out.println("THE FOLLOWING RUNNERS ARE ON THE TEAMS: " + r.getUsername() + " " + r.getTeam());
+    }
+
+    teamDaoService.saveTeam(localTeam);
+
+
 
     ModelAndView modelAndView = new ModelAndView();
-    modelAndView.setViewName("teams/addRunnerToTeam");
-    modelAndView.addObject("team",team);
-
-    List<Runner> athletesNotOnTeam = RunnersDaoService.getAllRunnersNotOnTeam(team);
-    modelAndView.addObject("athletesNotOnTeam", athletesNotOnTeam);
+    modelAndView.setViewName("teams/team");
+    modelAndView.addObject("team",localTeam);
 
     return modelAndView;  // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above/
                           // It's retrieving the css from static/teams/styles.css

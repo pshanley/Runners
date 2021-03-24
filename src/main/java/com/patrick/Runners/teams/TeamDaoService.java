@@ -26,7 +26,7 @@ public class TeamDaoService {
 
   public TeamDaoService(){}
 
-  public static void saveTeam(Team team){
+  public void saveTeam(Team team){
     repo.saveAndFlush(team);
 
     System.out.println("saved the following Runner to RDBMS: " + team.getTeamName());

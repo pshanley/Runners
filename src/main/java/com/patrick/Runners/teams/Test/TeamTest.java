@@ -114,7 +114,7 @@ public class TeamTest {
     Runner patrick = new Runner("Patrick", "Hanley", "grc_running", team);
     List<Runner> athletesOnTeam = Arrays.asList(galen, patrick);
     team.setAthletes(athletesOnTeam);
-    TeamDaoService.saveTeam(team);
+    //TeamDaoService.saveTeam(team);
     // When Cascade=ALL This is able to create new runners and then create a new team, and store everything in the database
     // The runners have a column corresponding to the Team ID
   }

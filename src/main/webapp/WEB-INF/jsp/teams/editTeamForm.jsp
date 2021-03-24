@@ -57,10 +57,7 @@
          </table><br><br>
 
 
-        <form action="/teams/addRunner" method="POST">
-          <label for="runner">Runner name:</label>
-          <input type="text" id="runner" name="runner"><br><br>
-          <input type="hidden" name="teamName" value="${team.teamName}"/>
+        <form action="/teams/saveTeamChanges" method="POST">
           <input type="submit" value="Submit">
         </form><br>
 
