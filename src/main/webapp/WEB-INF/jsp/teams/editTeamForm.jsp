@@ -62,7 +62,8 @@
         </form><br>
 
         <form action="/teams" style="text-align: center">
-            <input type="submit" value="Back to Teams"  />
+        <input type="hidden" name="teamName" value="${team.teamName}" />
+            <input type="submit" value="Reset"  />
         </form><br>
 
         <form action="/" style="text-align: center">

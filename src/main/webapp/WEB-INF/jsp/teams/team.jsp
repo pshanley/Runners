@@ -28,7 +28,7 @@
 
     <form align="center" action="/showEditTeamForm">
        <input type="hidden" name="teamName" value="${team.teamName}" />
-       <input type="submit" value="Add a Runner to the Team" />
+       <input type="submit" value="Edit Team" />
     </form><br>
 
     <form align="center" action="/addTeamForm">

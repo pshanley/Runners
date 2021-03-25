@@ -33,6 +33,7 @@ public class TeamsController {
   TeamDaoService teamDaoService = new TeamDaoService();
   RunnersDaoService runnersDaoService = new RunnersDaoService();
   public Team localTeam;
+  List<Runner> removedRunners = new ArrayList<>();
 
   @RequestMapping("/teams")
   public ModelAndView listTeams(@RequestParam(required = false) String teamName) {
@@ -78,51 +79,28 @@ public class TeamsController {
 
   @PostMapping("/teams/saveTeamChanges")
   public ModelAndView saveTeamChanges(){
-    System.out.println("SAVING TEAM___________SAVING TEAM");
-    //Team team = teamDaoService.getSingleTeam(teamName);
-    //System.out.println(team.getTeamName());
 
-    //Runner runner = runnersDaoService.getSingleRunner(runnerName);
-    //System.out.println(runner.getFirstName());
-    //teamDaoService.addRunnerToTeam(team,runner);
-    for(Runner r: localTeam.getAthletes()){
-      System.out.println("THE FOLLOWING RUNNERS ARE ON THE TEAMS: " + r.getUsername() + " " + r.getTeam());
+    teamDaoService.saveTeam(localTeam); // saving the team updates the runners that were added
+    for(Runner r: removedRunners){
+      RunnersDaoService.saveRunner(r); // but...saving isn't updating the runners that were removed, have to do it myself
+                                      // Not sure if I configured the One to Many relationship wrong or that's just how it is
     }
-
-    teamDaoService.saveTeam(localTeam);
-
-
 
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("teams/team");
     modelAndView.addObject("team",localTeam);
+    removedRunners.clear();
 
     return modelAndView;  // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above/
                           // It's retrieving the css from static/teams/styles.css
   }
 
-  /*@GetMapping("/addRunnerToTeamForm")
-  public ModelAndView showAddRunnerToTeamForm(@RequestParam(name="teamName") String teamName) {
-    System.out.println("redirecting to addTeam form for Team: " + teamName);
-    Team team = teamDaoService.getSingleTeam(teamName);
 
-    ModelAndView modelAndView = new ModelAndView();
-    modelAndView.setViewName("teams/addRunnerToTeam");
-    modelAndView.addObject("team",team);
-
-    List<Runner> athletesNotOnTeam = RunnersDaoService.getAllRunnersNotOnTeam(team);
-    modelAndView.addObject("athletesNotOnTeam", athletesNotOnTeam);
-
-    // need to create a model and add the team to that
-    return modelAndView;
-  }*/
-
-
-  // ****************************************************************************** //
 
   @GetMapping("/showEditTeamForm")
   public ModelAndView showEditTeamForm(@RequestParam(name="teamName") String teamName) {
     localTeam = teamDaoService.getSingleTeam(teamName);
+
 
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("teams/editTeamForm");
@@ -144,10 +122,21 @@ public class TeamsController {
     // This is fetching the team from RDBMS each time and overriding the previous local edition
     //Team team = teamDaoService.getSingleTeam(teamName);
 
-
+    Runner runnerToReAdd = null;
     Runner runner = runnersDaoService.getSingleRunner(runnerName);
     localTeam.addAthletes(runner);
     runner.setTeam(localTeam);
+
+
+    // this is kind of sloppy. The Runner obj I added to the removedRunners list is not the same as the object
+    // I pull from the database in this method. Instead I compare by username and if there is a match I assign
+    // a new object
+    for(Runner r: removedRunners){
+      if(r.getUsername().equals(runnerName)) {
+        runnerToReAdd = r;
+      }
+    }
+    removedRunners.remove(runnerToReAdd); // runnerToReAdd references(?) this same object in the list
 
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("teams/editTeamForm");
@@ -165,10 +154,11 @@ public class TeamsController {
     Runner runner = null;
     List<Runner> localTeamAthletes = localTeam.getAthletes();
 
-    for(Runner r : localTeam.getAthletes()){
+    for(Runner r : localTeam.getAthletes()){ // not sure if there is a more efficient way to do this, but other functions might iterate through a list behind the scenes so it might not even matter
       if(r.getUsername().equals(runnerName)){
          runner = r;
         runner.setTeam(null);
+        removedRunners.add(runner);
       }
     }
 
@@ -185,9 +175,6 @@ public class TeamsController {
     return modelAndView;  // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above/
     // It's retrieving the css from static/teams/styles.css
   }
-
-
-
 
 
 }

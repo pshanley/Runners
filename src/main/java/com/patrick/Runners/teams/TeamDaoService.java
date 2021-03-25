@@ -29,7 +29,7 @@ public class TeamDaoService {
   public void saveTeam(Team team){
     repo.saveAndFlush(team);
 
-    System.out.println("saved the following Runner to RDBMS: " + team.getTeamName());
+    System.out.println("saved the following Team to RDBMS: " + team.getTeamName());
   }
 
   public List<Team> getAllTeams() {
