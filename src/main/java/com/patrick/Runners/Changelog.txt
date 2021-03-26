@@ -11,11 +11,16 @@ Users Management
     * Maybe an approval process? I can approve users
 
 Runners
-* Create New Cypress, currently using local cypress-202 project
+* Add team name to homepage and runners record
+* add photos to teams (upload files??)
 * Individual records for each runner? Add PRs?
 
 Infra
 * Put project in a container
+* Create New Cypress, currently using local cypress-202 project
+
+
+
 
 
 

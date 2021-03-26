@@ -16,17 +16,12 @@
 <body>
     <div align="center">
         <h2>Runner information</h2>
-        <span>First Name:</span><span>${runner.firstName}</span><br/>
-        <span>Last Name:</span><span>${runner.lastName}</span><br/>
-        <span>Instagram Handle:</span><span>${runner.instagramHandle}</span><br/>
-        <span>Number of Followers:</span><span>${runner.followersCount}</span><br/>
-        <span>Image:</span><span><img alt="" height=40  src=${runner.imageURL}></span><br/>
-        <c:if test="${runner.firstName != null}">
-            <div class="firstName">test1: ${runner.firstName}</div>
-        </c:if>
-        <c:if test="${runner.lastName != ''}">
-            <div class="lastName">test2: ${runner.lastName}</div>
-        </c:if>
+        <span>First Name:</span><span>${runner.firstName}</span><br/><br/>
+        <span>Last Name:</span><span>${runner.lastName}</span><br/><br/>
+        <span>Instagram Handle:</span><span><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></span><br/><br/>
+        <span>Number of Followers:</span><span>${runner.followersCount}</span><br/><br/>
+        <span>Image:</span><span><img alt="" height=40  src=${runner.imageURL}></span><br/><br/>
+        <span>Team:</span><span>${runner.team.teamName}</span><br/><br/>
     </div><br><br>
 
     <form action="/" align="center" >

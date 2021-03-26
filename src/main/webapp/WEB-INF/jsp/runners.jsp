@@ -15,7 +15,7 @@
 
     <table align="center">
         <tr>
-            <th>Pic</th><th>Name</th><th>Instagram Handle</th><th>Number of Followers</th>
+            <th>Pic</th><th>Name</th><th>Instagram Handle</th><th>Number of Followers</th><th>Team</th>
         </tr>
         <c:forEach var="runner" items="${runners}">
         <tr>
@@ -23,6 +23,7 @@
             <td><a href="runners?username=${runner.username}">${runner.firstName} ${runner.lastName}</a></td>
             <td><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></td>
             <td>${runner.followersCount}</td>
+           <td>${runner.team.teamName}</td>
         </tr>
         </c:forEach>
     </table><br><br>
