@@ -37,7 +37,7 @@
         <form:form action="addTeam" method="post" modelAttribute="team">
             <form:label path="teamName">Team Name:</form:label>
             <form:input path="teamName"/><br/>
-
+            <span style="color:red">${error}</span><br>
             <form:button>Add Team</form:button>
         </form:form><br>
 

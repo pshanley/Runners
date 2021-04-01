@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.transaction.Transactional;
+import javax.validation.constraints.Size;
 
 import com.patrick.Runners.runner.Runner;
 
@@ -29,6 +30,7 @@ public class Team implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @Size(min=1)
   @Column(name="team_name")
   private String teamName;
 

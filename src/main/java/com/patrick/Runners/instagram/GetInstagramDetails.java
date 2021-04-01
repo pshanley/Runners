@@ -12,14 +12,23 @@ public class GetInstagramDetails {
 
 
 
-  public static void getInstagramDetails(Runner runner) throws IOException, InterruptedException {
+  public static boolean getInstagramDetails(Runner runner) throws IOException, InterruptedException {
     JSONObject instagramResponseJSON = InstagramRequest.makeGetRequest(runner.getInstagramHandle());
+
+    if( instagramResponseJSON.has("response")){
+      if (instagramResponseJSON.getInt("response") == 404) {
+        System.out.println("INSTAGRAM REQUEST NOT SUCCESSFUL");
+        return false;
+      }
+    }
 
     String profilePicUrl = InstagramParsing.returnProfilePicURL(instagramResponseJSON);
     runner.setImageURL(profilePicUrl);
 
     int followersCount = InstagramParsing.returnFollowerCount(instagramResponseJSON);
     runner.setFollowersCount(followersCount);
+
+    return true;
 
   }
 

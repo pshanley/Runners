@@ -41,10 +41,10 @@
             <form:label path="lastName">Last Name:</form:label>
             <form:input path="lastName"/><br/>
 
-            <form:label path="instagramHandle">Instagram Handle:</form:label>
+            <form:label path="instagramHandle">Instagram Handle: @</form:label>
             <form:input path="instagramHandle"/><br/>
 
-
+            <span style="color:red">${error}</span><br>
 
             <form:button>Add Runner</form:button>
         </form:form>

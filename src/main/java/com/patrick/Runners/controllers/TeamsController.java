@@ -65,11 +65,26 @@ public class TeamsController {
 
   @PostMapping("/addTeam")
   @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
-  public String submitAddTeamForm(@ModelAttribute("team") Team team)
+  public ModelAndView submitAddTeamForm(@ModelAttribute("team") Team team)
       throws IOException, InterruptedException {
+
+    ModelAndView modelAndView = new ModelAndView();
+    if(team.getTeamName().equals("")){
+      modelAndView.addObject("error","Team name can not be blank");
+      modelAndView.setViewName("teams/addTeam");
+      return modelAndView;
+    }
+    Team existingTeam = teamDaoService.getSingleTeam(team.getTeamName());
+    if (existingTeam != null){
+      modelAndView.addObject("error","Team already exists");
+      modelAndView.setViewName("teams/addTeam");
+      return modelAndView;
+
+    }
+
     saveTeam(team);
-    System.out.println(team.getTeamName());
-    return "teams/addTeamSuccess";
+    modelAndView.setViewName("teams/addTeamSuccess");
+    return modelAndView;
   }
 
 

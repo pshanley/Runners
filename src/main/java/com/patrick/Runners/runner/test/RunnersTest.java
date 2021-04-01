@@ -41,6 +41,16 @@ public class RunnersTest {
     for(Runner r: runnerListNotOnNop){
       System.out.println(r.getUsername());
     }
+  }
+
+  @Test
+  public void getRunnerByInstagramHandle() {
+    ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(RunnersApplication.class);
+    RunnersDaoService runnersDaoService = configurableApplicationContext.getBean(RunnersDaoService.class);
+    //RunnerRepository repo = configurableApplicationContext.getBean(RunnerRepository.class);
+    Runner runner = runnersDaoService.getRunnerByInstagramHandle("gomofarah");
+    System.out.println(runner.getUsername());
 
   }
+
 }

@@ -2,7 +2,6 @@ package com.patrick.Runners.runner;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.google.common.collect.Lists;
 import com.patrick.Runners.teams.Team;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,13 @@ public class RunnersDaoService {
     Runner runner = repo.findByUsername(username);
     return runner;
   }
-// Drew hunter is null in Runners List
+
+  public Runner getRunnerByInstagramHandle(String instagramHandle){
+    Runner runner = repo.findByInstagramHandle(instagramHandle);
+    return runner;
+  }
+
+
   public static List<Runner> getAllRunnersNotOnTeam(Team team) {
     List<Runner> runnersList = getRunnersList();
     List<Runner> runnersToRemove = new ArrayList<>(); // can't change the size of a List during for a loop

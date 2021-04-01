@@ -41,6 +41,7 @@ public class InstagramRequest {
     try {
       System.out.println("Making request without cookies");
        jsonResponse = executeGetRequest(httpClient, httpRequest);
+
     } catch (JSONException e){
       System.out.println("Login failed, generating cookies now");
       GenerateCookies.RunCypress(); // Runs Cypress to login and log cookies
@@ -64,7 +65,9 @@ public class InstagramRequest {
       HttpResponse response = httpClient.execute(httpRequest);
 
       if (response.getStatusLine().getStatusCode() != 200) { //Check for HTTP response code: 200 = success
-        throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
+        //throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
+        jsonObject = new JSONObject();
+        return jsonObject.put("response",response.getStatusLine().getStatusCode());
       }
       BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
       String output;
