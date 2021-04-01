@@ -7,11 +7,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Professional Running Clubs</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <h1 align="center">${team.teamName}</h1>
-    <br/>
+    <h2 align="center"><img  src="/uploads/${team.teamName}" height="100" width="100"></h1><br> <!-- THE ROOT / is IMPORTANT-->
+
     <table align="center">
         <tr>
             <th>Pic</th><th>Name</th><th>Instagram Handle</th><th>Number of Followers</th>
@@ -25,6 +26,17 @@
         </tr>
         </c:forEach>
     </table><br><br>
+
+
+   		<form method="POST" enctype="multipart/form-data" action="/uploadFile">
+   			<table align="center">
+   			    <tr><td>Update Team Picture </td></tr>
+   				<tr><td><input type="file" name="file" /></td></tr>
+   				       <input type="hidden" name="teamName" value="${team.teamName}" />
+   				<tr><td><input type="submit" value="Upload" /> <span style="color:red">${error}</span></td></tr>
+   			</table>
+   		</form>
+   	<br><br>
 
     <form align="center" action="/showEditTeamForm">
        <input type="hidden" name="teamName" value="${team.teamName}" />

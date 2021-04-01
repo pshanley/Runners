@@ -87,7 +87,7 @@ public class TeamsController {
     }
 
     ModelAndView modelAndView = new ModelAndView();
-    modelAndView.setViewName("teams/team");
+    modelAndView.setViewName("/teams/team"); // this refers to the .jsp
     modelAndView.addObject("team",localTeam);
     removedRunners.clear();
 

@@ -7,17 +7,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Professional Running Clubs</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <h1 align="center">List of Professional Running Teams</h1>
     <br/>
     <table align="center">
         <tr>
-         <th>TeamName</th>
+         <th>Picture</th><th>TeamName</th>
         </tr>
         <c:forEach var="team" items="${teams}">
         <tr>
+          <td><img  src="/uploads/${team.teamName}" alt="" height="50" width="50"></td>
           <td><a href="teams?teamName=${team.teamName}">${team.teamName}</a></td>
         </tr>
         </c:forEach>

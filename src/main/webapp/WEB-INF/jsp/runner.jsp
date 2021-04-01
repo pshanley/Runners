@@ -21,7 +21,7 @@
         <span>Instagram Handle:</span><span><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></span><br/><br/>
         <span>Number of Followers:</span><span>${runner.followersCount}</span><br/><br/>
         <span>Image:</span><span><img alt="" height=40  src=${runner.imageURL}></span><br/><br/>
-        <span>Team:</span><span>${runner.team.teamName}</span><br/><br/>
+        <span>Team:</span><span><a href="teams?teamName=${runner.team.teamName}">${runner.team.teamName}</a></span><br/><br/>
     </div><br><br>
 
     <form action="/" align="center" >

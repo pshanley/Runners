@@ -7,10 +7,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Add a Runner to a Team</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <h1 align="center">Edit Team: ${team.teamName}</h1>
+        <h2 align="center"><img  src="/uploads/${team.teamName}" height="100" width="100"></h1><br>
+
     <br/>
          <table align="center">
              <tr><th>Remove</th><th>Pic</th><th>Name</th><th>Instagram Handle</th><th>Number of Followers</th></tr>

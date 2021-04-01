@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Add a Runner to a Team</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <h1 align="center">${team.teamName}</h1>
