@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: runners-application
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+    command: ./wait-for-it.sh mysql-standalone:3306 -t 60 -- catalina.sh run
+
+  mysql:
+    container_name: mysql-standalone
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=Runners
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=password
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: password
+    ports:
+      - "8081:80"
+
+
