@@ -34,13 +34,16 @@
 <body>
     <div align="center">
         <h2>User Registration</h2>
-        <form:form action="registerUser" method="post" modelAttribute="user">
+        <form:form action="registerUser" method="post" modelAttribute="userDTO">
             <form:label path="username">Username:</form:label>
             <form:input path="username"/><br/>
 
             <form:label path="password">Password:</form:label>
             <form:input type="password" path="password"/><br/>
 
+            <form:label path="matchingPassword">Confirm Password:</form:label>
+            <form:input type="password" path="matchingPassword"/><br/>
+            <span style="color:red">${error}</span><br>
 
             <form:button>Add User</form:button>
         </form:form>
