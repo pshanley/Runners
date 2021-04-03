@@ -2,6 +2,7 @@ package com.patrick.Runners.runner;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +25,8 @@ public class Runner implements Serializable {
   private String instagramHandle;
   private String username; //FIRST_LAST
   private int followersCount;
+
+  @Column(name="imageurl", columnDefinition="BLOB")
   private String imageURL;
 
 
