@@ -13,7 +13,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {// This runsloadUserByUsername is the only method in UserDetailsService interface
     User user = userRepository.findUserByUsername(username); // Runs RDBMS query
-    System.out.println(user.getUsername() + "has roles: " + user.getRoles().toString() );
 
     if (user == null) {
       System.out.println("can not find user");
