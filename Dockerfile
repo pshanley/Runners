@@ -4,7 +4,7 @@
 #ENTRYPOINT ["java","-jar","runners-mysql.jar"]
 
 FROM tomcat:latest
-ADD target/runners-mysql.war /usr/local/tomcat/webapps/ROOT.war
+ADD target/runners.war /usr/local/tomcat/webapps/runners.war
 COPY wait-for-it.sh wait-for-it.sh
 RUN chmod +x wait-for-it.sh
 

@@ -111,7 +111,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<finalName>runners-mysql</finalName>
+					<finalName>runners</finalName>
 				</configuration>
 			</plugin>
 		</plugins>
