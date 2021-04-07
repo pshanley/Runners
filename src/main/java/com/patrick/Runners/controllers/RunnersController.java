@@ -53,28 +53,12 @@ public class RunnersController {
   public ModelAndView submitAddRunnerForm(@ModelAttribute("runner") Runner runner) throws IOException, InterruptedException {
     ModelAndView modelAndView = new ModelAndView();
 
-    if (runner.getFirstName().equals("") && runner.getLastName().equals("")){
-      modelAndView.setViewName("addRunner");
-      modelAndView.addObject("error","First Name and Last Name are required");
-      return modelAndView;
-
-    } else if(runner.getFirstName().equals("")){
-      modelAndView.setViewName("addRunner");
-      modelAndView.addObject("error","First Name is required");
-      return modelAndView;
-
-    } else if(runner.getLastName().equals("")){
-      modelAndView.setViewName("addRunner");
-      modelAndView.addObject("error","Last Name is required");
-      return modelAndView;
-
-    }
     runner.setUsername(runner.getFirstName().toUpperCase() + "_" + runner.getLastName().toUpperCase());
 
-    Runner runnerDb = runnersDaoService.getSingleRunner(runner.getUsername());
-    if (runnerDb != null){
+    String runnerAdditionError = addRunnerValidations(runner);
+    if(!runnerAdditionError.equals("")){
+      modelAndView.addObject("error",runnerAdditionError);
       modelAndView.setViewName("addRunner");
-      modelAndView.addObject("error","Runner already exists");
       return modelAndView;
     }
 
@@ -84,12 +68,6 @@ public class RunnersController {
       Character c1 = runner.getInstagramHandle().charAt(0);
       if(c1.equals('@')){ // remove "@" from instagram handle if a user adds it
         runner.setInstagramHandle(runner.getInstagramHandle().substring(1));
-      }
-      Runner runnerInstagramCheck = runnersDaoService.getRunnerByInstagramHandle(runner.getInstagramHandle());
-      if (runnerInstagramCheck != null){
-        modelAndView.setViewName("addRunner");
-        modelAndView.addObject("error","Runner with that instagram handle already exists");
-        return modelAndView;
       }
       boolean instagramRequestSuccess = GetInstagramDetails.getInstagramDetails(runner);
       if(!instagramRequestSuccess){
@@ -116,6 +94,29 @@ public class RunnersController {
     modelAndView.addObject("runner",runner);
 
     return modelAndView;
+  }
+
+
+  public String addRunnerValidations(Runner runner){
+    Runner runnerDb = runnersDaoService.getSingleRunner(runner.getUsername());
+    Runner runnerInstagramCheck = runnersDaoService.getRunnerByInstagramHandle(runner.getInstagramHandle());
+
+    if (runner.getFirstName().equals("") && runner.getLastName().equals("")){
+      return "First Name and Last Name are required";
+    } else if(runner.getFirstName().equals("")){
+      return "First Name is required";
+    } else if(runner.getLastName().equals("")){
+      return "Last Name is required";
+    } else if(runner.getInstagramHandle().contains("/")){
+        return "Please insert just the instagram handle, not the full URL";
+    } else if (runnerDb != null) {
+        return "Runner with this name already exists";
+    } else if (runnerInstagramCheck !=null){
+      return "Runner with this Instagram Handle already exists";
+    } else {
+      return "";
+    }
+
   }
 
 
