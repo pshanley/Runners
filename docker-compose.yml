@@ -2,12 +2,15 @@ version: '3'
 
 services:
   app:
-    build: .
+    #build: .
     container_name: runners-application
+    image: pshanley323/runners:406
     ports:
       - 8080:8080
     depends_on:
       - mysql
+    volumes:
+      - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     command: ./wait-for-it.sh mysql-standalone:3306 -t 60 -- catalina.sh run
