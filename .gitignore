@@ -39,4 +39,4 @@ Changelog.txt
 .run/
 .env
 
-.pem
+*.pem
