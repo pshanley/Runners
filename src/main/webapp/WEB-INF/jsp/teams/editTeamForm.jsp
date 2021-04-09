@@ -68,9 +68,26 @@
             <input type="submit" value="Reset"  />
         </form><br>
 
-        <form action="/" style="text-align: center">
-            <input type="submit" value="Home"  />
-        </form><br>
+        <h3>Change Picture</h3>
+        <form method="POST" enctype="multipart/form-data" action="/uploadFile">
+           			<table align="center">
+           				<tr><td><input type="file" name="file" /></td></tr>
+           				       <input type="hidden" name="teamName" value="${team.teamName}" />
+           				<tr><td><input type="submit" value="Upload" /> <span style="color:red">${error}</span></td></tr>
+           			</table>
+           		</form>
+           	<br><br>
+
+        <h3 style="display: inline;">Delete Team</h3>
+        <form align="center" action="/teams/delete" method="POST">
+                <input type="hidden" name="teamName" value="${team.teamName}"><br>
+                <input type="submit" value="Delete Team" class="button-red"/>
+        </form> <br><br><br>
+
+          <form action="/" style="text-align: center">
+                    <input type="submit" value="Home"  />
+          </form><br>
+
     </div>
 </body>
 </html>

@@ -2,9 +2,9 @@ version: '3'
 
 services:
   app:
-    #build: .
+    build: .
     container_name: runners-application
-    image: pshanley323/runners:406
+    #image: pshanley323/runners:406 (# Need to make docker-compose-prod, I'm having to switch back and forth)
     ports:
       - 8080:8080
     depends_on:

@@ -67,6 +67,10 @@
     <form align="center" action="/addRunnerForm" >
         <input type="submit" value="Add Another Runner" />
     </form>
+    <form align="center" action="/runners/delete" method="POST">
+         <input type="hidden" name="runnerName" value="${runner.username}"><br>
+        <input type="submit" value="Delete Runner" class="button-red"/>
+    </form>
 
 </body>
 </html>

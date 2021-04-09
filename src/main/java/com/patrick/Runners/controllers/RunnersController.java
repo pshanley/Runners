@@ -158,9 +158,13 @@ public class RunnersController {
 
   }
 
-
-
-
+  @PostMapping("/runners/delete")
+  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
+  public ModelAndView deleteRunner(String runnerName){
+    Runner runner = runnersDaoService.getSingleRunner(runnerName);
+    runnersDaoService.deleteRunner(runner);
+    return new ModelAndView("redirect:/");
+  }
 
   public String addRunnerValidations(Runner runner){
     Runner runnerInstagramCheck;

@@ -46,6 +46,10 @@ public class RunnersDaoService {
     return runner;
   }
 
+  public void deleteRunner(Runner runner){
+    repo.delete(runner);
+  }
+
   public Runner getRunnerByInstagramHandle(String instagramHandle){
     Runner runner = repo.findByInstagramHandle(instagramHandle);
     return runner;

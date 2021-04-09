@@ -28,15 +28,7 @@
     </table><br><br>
 
 
-   		<form method="POST" enctype="multipart/form-data" action="/uploadFile">
-   			<table align="center">
-   			    <tr><td>Update Team Picture </td></tr>
-   				<tr><td><input type="file" name="file" /></td></tr>
-   				       <input type="hidden" name="teamName" value="${team.teamName}" />
-   				<tr><td><input type="submit" value="Upload" /> <span style="color:red">${error}</span></td></tr>
-   			</table>
-   		</form>
-   	<br><br>
+
 
     <form align="center" action="/showEditTeamForm">
        <input type="hidden" name="teamName" value="${team.teamName}" />

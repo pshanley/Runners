@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.patrick.Runners.runner.Runner;
 import com.patrick.Runners.runner.RunnerRepository;
-import com.patrick.Runners.runner.RunnersDaoService;
 
 @Service
 public class TeamDaoService {
@@ -35,6 +34,10 @@ public class TeamDaoService {
   public List<Team> getAllTeams() {
     List<Team> listTeams = repo.findAll();
     return listTeams;
+  }
+
+  public void deleteTeam(Team team){
+    repo.delete(team);
   }
 
   public Team getSingleTeam(String teamName){

@@ -40,3 +40,5 @@ Changelog.txt
 .env
 
 *.pem
+
+/src/main/webapp/uploads/

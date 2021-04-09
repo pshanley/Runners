@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
 import com.patrick.Runners.runner.Runner;
+import com.patrick.Runners.runner.RunnerRepository;
 import com.patrick.Runners.runner.RunnersDaoService;
 import com.patrick.Runners.teams.Team;
 import com.patrick.Runners.teams.TeamDaoService;
@@ -190,6 +191,19 @@ public class TeamsController {
     return modelAndView;
   }
 
+  @PostMapping("/teams/delete")
+  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
+  public ModelAndView deleteTeam(String teamName){
+    Team team = teamDaoService.getSingleTeam(teamName);
+    List<Runner> runners= team.getAthletes();
+    for(Runner r: runners){
+      r.setTeam(null);
+      RunnersDaoService.saveRunner(r);
+    }
+    teamDaoService.deleteTeam(team);
+
+    return new ModelAndView("redirect:/teams");
+  }
 
 }
 
