@@ -25,6 +25,10 @@
 
     </div><br><br>
 
+    <form action="/editRunnerForm" align="center">
+        <input type="hidden" name="runnerName" value=${runner.username}>
+        <input type="submit" value="Add ${runner.firstName} to a Team" />
+    </form><br>
     <form action="/" align="center" >
         <input type="submit" value="View Runners" />
     </form><br>

@@ -99,15 +99,15 @@ public class TeamsController {
     for(Runner r: removedRunners){
       RunnersDaoService.saveRunner(r); // but...saving isn't updating the runners that were removed, have to do it myself
                                       // Not sure if I configured the One to Many relationship wrong or that's just how it is
-    }
+    }                                 // I might only have to save the runners (and not bother with the team) and JPA will take care ofthe O2M
 
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("/teams/team"); // this refers to the .jsp
     modelAndView.addObject("team",localTeam);
     removedRunners.clear();
 
-    return modelAndView;  // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above/
-                          // It's retrieving the css from static/teams/styles.css
+    return modelAndView;
+
   }
 
 
@@ -144,7 +144,7 @@ public class TeamsController {
 
 
     // this is kind of sloppy. The Runner obj I added to the removedRunners list is not the same as the object
-    // I pull from the database in this method. Instead I compare by username and if there is a match I assign
+    // I pull from the database above. Instead I compare by username and if there is a match I assign
     // a new object
     for(Runner r: removedRunners){
       if(r.getUsername().equals(runnerName)) {
@@ -160,8 +160,8 @@ public class TeamsController {
     List<Runner> athletesNotOnTeam = RunnersDaoService.getAllRunnersNotOnLocalTeam(localTeam);
     modelAndView.addObject("athletesNotOnTeam", athletesNotOnTeam);
 
-    return modelAndView;  // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above/
-    // It's retrieving the css from static/teams/styles.css
+    return modelAndView;
+
   }
 
   @PostMapping("/teams/removeRunnerLocal")
@@ -187,8 +187,7 @@ public class TeamsController {
     List<Runner> athletesNotOnTeam = RunnersDaoService.getAllRunnersNotOnLocalTeam(localTeam);
     modelAndView.addObject("athletesNotOnTeam", athletesNotOnTeam);
 
-    return modelAndView;  // the view is trying to find "/teams/styles.css" and not "/styles.css" like when I pass the view above/
-    // It's retrieving the css from static/teams/styles.css
+    return modelAndView;
   }
 
 

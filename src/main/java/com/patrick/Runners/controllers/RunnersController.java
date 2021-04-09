@@ -19,11 +19,15 @@ import java.util.List;
 import com.patrick.Runners.instagram.GetInstagramDetails;
 import com.patrick.Runners.runner.Runner;
 import com.patrick.Runners.runner.RunnersDaoService;
+import com.patrick.Runners.teams.Team;
+import com.patrick.Runners.teams.TeamDaoService;
 
 @Controller
 public class RunnersController {
 
   RunnersDaoService runnersDaoService = new RunnersDaoService();
+  TeamDaoService teamDaoService = new TeamDaoService();
+
 
   @RequestMapping("/")
   public String listRunner(Model model) {
@@ -97,9 +101,58 @@ public class RunnersController {
   }
 
 
+  @GetMapping("/editRunnerForm")
+  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
+  public ModelAndView showEditRunnerForm(String runnerName) {
+    ModelAndView modelAndView = new ModelAndView();
+    System.out.println(runnerName);
+    Runner runner = runnersDaoService.getSingleRunner(runnerName);
+    modelAndView.setViewName("runners/editRunner");
+    modelAndView.addObject("runner",runner);
+
+    List<Team> teamList = teamDaoService.getAllTeams();
+    modelAndView.addObject("teams",teamList);
+
+    System.out.println("redirecting to editRunner form");
+    return modelAndView;
+
+  }
+
+  @PostMapping("/runners/addToTeam")
+  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
+  public ModelAndView addToTeam(String runnerName, String teamName) {
+    ModelAndView modelAndView = new ModelAndView();
+    System.out.println(runnerName);
+    Runner runner = runnersDaoService.getSingleRunner(runnerName);
+    Team team = teamDaoService.getSingleTeam(teamName);
+    runner.setTeam(team);
+    if(team != null) {
+      team.addAthletes(runner);
+    }else{
+      runner.setTeam(null);
+    }
+
+    RunnersDaoService.saveRunner(runner);
+
+    modelAndView.setViewName("runner");
+    modelAndView.addObject("runner",runner);
+
+    return modelAndView;
+
+  }
+
+
+
+
+
   public String addRunnerValidations(Runner runner){
+    Runner runnerInstagramCheck;
     Runner runnerDb = runnersDaoService.getSingleRunner(runner.getUsername());
-    Runner runnerInstagramCheck = runnersDaoService.getRunnerByInstagramHandle(runner.getInstagramHandle());
+    if(!runner.getInstagramHandle().equals("")) {
+       runnerInstagramCheck = runnersDaoService.getRunnerByInstagramHandle(runner.getInstagramHandle());
+    }else{
+       runnerInstagramCheck = null;
+    }
 
     if (runner.getFirstName().equals("") && runner.getLastName().equals("")){
       return "First Name and Last Name are required";

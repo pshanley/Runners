@@ -44,3 +44,9 @@ th {
 }
 
 .minus:before{content:"\f056"}
+
+span {
+        display: inline-block;
+        width: 200px;
+        text-align: left;
+    }
