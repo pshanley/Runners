@@ -141,6 +141,23 @@ public class RunnersController {
 
   }
 
+  @PostMapping("/runners/updateRunnerPicture")
+  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
+  public ModelAndView setNewImageForRunner(String newImageUrl, String runnerName) {
+    ModelAndView modelAndView = new ModelAndView();
+    System.out.println(newImageUrl);
+    Runner runner = runnersDaoService.getSingleRunner(runnerName);
+    runner.setImageURL(newImageUrl);
+
+    RunnersDaoService.saveRunner(runner);
+
+    modelAndView.setViewName("runner");
+    modelAndView.addObject("runner",runner);
+
+    return modelAndView;
+
+  }
+
 
 
 

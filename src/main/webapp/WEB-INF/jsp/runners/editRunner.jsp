@@ -12,16 +12,22 @@
 <body>
     <div align="center">
         <h2>Runner information</h2>
-        <span>First Name:</span><span>${runner.firstName}</span><br/><br/>
-        <span>Last Name:</span><span>${runner.lastName}</span><br/><br/>
+        <span>Name:</span><span>${runner.firstName} ${runner.lastName}</span><br/><br/>
         <span>Instagram Handle:</span><span><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></span><br/><br/>
         <span>Number of Followers:</span><span>${runner.followersCount}</span><br/><br/>
         <span>Image:</span><span><img alt="" height=40  src=${runner.imageURL}></span><br/><br/>
         <span>Team:</span><span><a href="teams?teamName=${runner.team.teamName}">${runner.team.teamName}</a></span><br/><br/>
     </div><br><br>
 
+    <h3 align="center">Update ${runner.firstName} ${runner.lastName}&#39;s Picture </h3>
+   <form action="/runners/updateRunnerPicture" method="POST" align="center">
+     <label for="newImageUrl">New Image URL:</label><br>
+     <input type="text" id="newImageUrl" name="newImageUrl"><br>
+     <input type="hidden" name="runnerName" value="${runner.username}"><br>
+     <input type="submit">
+   </form><br><br>
 
-    <h3 align="center">List of Teams</h1>
+    <h3 align="center">Change ${runner.firstName} ${runner.lastName}&#39;s team </h3>
         <br/>
         <table align="center">
             <tr>

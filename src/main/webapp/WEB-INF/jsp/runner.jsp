@@ -16,8 +16,7 @@
 <body>
     <div align="center">
         <h2>Runner information</h2>
-        <span>First Name:</span><span>${runner.firstName}</span><br/><br/>
-        <span>Last Name:</span><span>${runner.lastName}</span><br/><br/>
+        <span>Name:</span><span>${runner.firstName} ${runner.lastName}</span><br/><br/>
         <span>Instagram Handle:</span><span><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></span><br/><br/>
         <span>Number of Followers:</span><span>${runner.followersCount}</span><br/><br/>
         <span>Image:</span><span><img alt="" height=40  src=${runner.imageURL}></span><br/><br/>
@@ -29,14 +28,11 @@
 
         <form action="/editRunnerForm" align="center">
             <input type="hidden" name="runnerName" value=${runner.username}>
-            <input type="submit" value="Add ${runner.firstName} to a Team" />
+            <input type="submit" value="Edit ${runner.firstName}&#39;s Profile" />
         </form><br>
     <form action="/" align="center" >
         <input type="submit" value="Back to Runners" />
     </form><br>
-    <form align="center" action="/addRunnerForm" >
-        <input type="submit" value="Add Another Runner" />
-    </form>
 
 </body>
 </html>
