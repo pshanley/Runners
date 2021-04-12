@@ -23,7 +23,7 @@ public class FileUploadController {
   TeamDaoService teamDaoService = new TeamDaoService();
 
 
-  @PostMapping("/uploadFile")
+  @PostMapping("/uploadFile") // File Uploads are not persistent across container restarts yet
   public ModelAndView uploadFile(@RequestParam(name="file") MultipartFile file, @RequestParam("teamName") String teamName) throws IOException {
     System.out.println("THIS IS THE FILE TYPE: " + file.getContentType());
     System.out.println("THIS IS THE FILE RESOURCE: " + file.getResource());
@@ -44,7 +44,6 @@ public class FileUploadController {
     }else{
       modelAndView.addObject("error","Please Choose a File");
     }
-
 
 
     modelAndView.setViewName("/teams/team");

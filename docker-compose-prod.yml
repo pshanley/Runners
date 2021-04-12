@@ -2,20 +2,18 @@ version: '3'
 
 services:
   app:
-    build: .
     container_name: runners-application
+    image: ${RUNNERS_PROD_IMAGE}
     ports:
       - 8080:8080
-      - 5005:5005 #remote debug
     depends_on:
       - mysql
     volumes:
-      - ./cypress/cookies/:/usr/local/runners/cookies/
+      - ./cookies/:/usr/local/runners/cookies/
       - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock # connect to docker daemon from inside container
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - JAVA_TOOL_OPTIONS= -agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
     command: ./wait-for-it.sh mysql-standalone:3306 -t 60 -- catalina.sh run
 
   mysql:
@@ -39,4 +37,3 @@ services:
 
 volumes:
   my-datavolume:
-
