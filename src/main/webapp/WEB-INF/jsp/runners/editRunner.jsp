@@ -15,17 +15,19 @@
         <span>Name:</span><span>${runner.firstName} ${runner.lastName}</span><br/><br/>
         <span>Instagram Handle:</span><span><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></span><br/><br/>
         <span>Number of Followers:</span><span>${runner.followersCount}</span><br/><br/>
-        <span>Image:</span><span><img alt="" height=40  src=${runner.imageURL}></span><br/><br/>
+        <span>Image:</span><span><img alt="" height=40  src="/uploads/${runner.username}" ></span><br/><br/>
         <span>Team:</span><span><a href="teams?teamName=${runner.team.teamName}">${runner.team.teamName}</a></span><br/><br/>
     </div><br><br>
 
     <h3 align="center">Update ${runner.firstName} ${runner.lastName}&#39;s Picture </h3>
-   <form action="/runners/updateRunnerPicture" method="POST" align="center">
-     <label for="newImageUrl">New Image URL:</label><br>
-     <input type="text" id="newImageUrl" name="newImageUrl"><br>
-     <input type="hidden" name="runnerName" value="${runner.username}"><br>
-     <input type="submit">
-   </form><br><br>
+        <form method="POST" enctype="multipart/form-data" action="/uploadRunnerImage">
+           			<table align="center">
+           				<tr><td><input type="file" name="file" /></td></tr>
+           				       <input type="hidden" name="runner" value="${runner.username}" />
+           				<tr><td><input type="submit" value="Upload" /> <span style="color:red">${error}</span></td></tr>
+           			</table>
+           		</form>
+           	<br><br>
 
     <h3 align="center">Change ${runner.firstName} ${runner.lastName}&#39;s team </h3>
         <br/>
@@ -56,7 +58,6 @@
             </td>
                           <td></td>
                           <td></td>
-
            </tr>
 
         </table><br><br>

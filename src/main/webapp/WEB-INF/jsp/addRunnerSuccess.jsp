@@ -20,7 +20,7 @@
         <span>Last Name:</span><span>${runner.lastName}</span><br/>
         <span>Instagram Handle:</span><span>${runner.instagramHandle}</span><br/>
         <span>Number of Followers:</span><span>${runner.followersCount}</span><br/>
-        <span>Image:</span><span><img alt="" height=40  src=${runner.imageURL}></span><br/>
+        <span>Image:</span><span><img alt="" height=40  src="/uploads/${runner.username}"></span><br/>
         <span style="color:red">${error}</span><br>
 
     </div><br><br>

@@ -33,8 +33,8 @@
 </head>
 <body>
     <div align="center">
-        <h2>User Registration</h2>
-        <form:form action="addRunner" method="post" modelAttribute="runner">
+        <h2>Add a Runner</h2>
+        <form:form action="addRunner" method="post" modelAttribute="runner" enctype="multipart/form-data">
             <form:label path="firstName">First Name:</form:label>
             <form:input path="firstName"/><br/>
 
@@ -42,7 +42,14 @@
             <form:input path="lastName"/><br/>
 
             <form:label path="instagramHandle">Instagram Handle: @</form:label>
-            <form:input path="instagramHandle"/><br/>
+            <form:input path="instagramHandle"/><br>
+
+
+            <label for="file">Upload Picture</label>
+           	<input type="file" name="file" />
+
+           	<input type="hidden" name="teamName" value="${team.teamName}"/>
+           	<br><br>
 
             <span style="color:red">${error}</span><br>
 
