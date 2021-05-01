@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
+import com.patrick.Runners.instagram.GenerateCookies;
 import com.patrick.Runners.instagram.GetInstagramDetails;
 import com.patrick.Runners.runner.Runner;
 import com.patrick.Runners.runner.RunnersDaoService;
@@ -193,8 +194,12 @@ public class RunnersController {
 
   }
 
-
-
-
+  @GetMapping("/runCypress") // secret Cypress test endpoint
+  @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
+  public ModelAndView runCypress() throws IOException, InterruptedException {
+    GenerateCookies.RunCypress();
+    System.out.println("cypress would be running");
+    return new ModelAndView("redirect:/");
+  }
 
 }

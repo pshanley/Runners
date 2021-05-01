@@ -42,3 +42,9 @@ Changelog.txt
 *.pem
 
 /src/main/webapp/uploads/
+
+/cypress/cypress.env.json
+/cypress/cookies/
+/cypress/notes.txt
+
+src/main/resources/cookies/
