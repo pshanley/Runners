@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.patrick.Runners.runner.Runner;
+import com.patrick.Runners.runner.RunnersDaoService;
 import com.patrick.Runners.teams.Team;
 import com.patrick.Runners.teams.TeamDaoService;
 
@@ -21,35 +23,75 @@ public class FileUploadController {
   FileUploadService fileUploadService;
 
   TeamDaoService teamDaoService = new TeamDaoService();
-
+  RunnersDaoService runnersDaoService = new RunnersDaoService();
 
   @PostMapping("/uploadFile") // File Uploads are not persistent across container restarts yet
-  public ModelAndView uploadFile(@RequestParam(name="file") MultipartFile file, @RequestParam("teamName") String teamName) throws IOException {
-    System.out.println("THIS IS THE FILE TYPE: " + file.getContentType());
-    System.out.println("THIS IS THE FILE RESOURCE: " + file.getResource());
-    String fileExtension= new String();
-    String[] allowedExtensions = {".png",".jgp",".jpeg"};
-    List<String> extensionsList = Arrays.asList(allowedExtensions);
+  public ModelAndView uploadFile( @RequestParam(name = "file") MultipartFile file, @RequestParam("teamName") String teamName) throws IOException {
 
     ModelAndView modelAndView = new ModelAndView();
     Team team = teamDaoService.getSingleTeam(teamName);
 
-    if(!file.getOriginalFilename().isEmpty()){
-       fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
-      if(extensionsList.contains(fileExtension) && file.getSize()>0){
-        fileUploadService.TeamFileUpload(file, team.getTeamName());
-      }else{
-        modelAndView.addObject("error", "The File must be one of the following: .jpg, .jpeg, .png");
-      }
-    }else{
-      modelAndView.addObject("error","Please Choose a File");
+    String fileUploadValidation = addFileUploadValidations(file);
+
+    if (!fileUploadValidation.equals("")) {
+      modelAndView.addObject("error", fileUploadValidation);
+      modelAndView.setViewName("teams/editTeamForm");
+      modelAndView.addObject("team",team);
+
+      List<Runner> athletesNotOnTeam = RunnersDaoService.getAllRunnersNotOnTeam(team);
+      modelAndView.addObject("athletesNotOnTeam", athletesNotOnTeam);
+      return modelAndView;
+
     }
 
-
+    fileUploadService.TeamFileUpload(file, team.getTeamName());
     modelAndView.setViewName("/teams/team");
     modelAndView.addObject("team", team);
     return modelAndView;
+  }
 
+  @PostMapping("/uploadRunnerImage")
+  public ModelAndView uploadRunnerImage(
+      @RequestParam(name = "file") MultipartFile file, @RequestParam("runner") String runnerName) throws IOException {
+
+    Runner runner = runnersDaoService.getSingleRunner(runnerName);
+    ModelAndView modelAndView = new ModelAndView();
+
+    String fileUploadValidation = addFileUploadValidations(file);
+
+    if (!fileUploadValidation.equals("")) {
+      modelAndView.addObject("error", fileUploadValidation);
+      modelAndView.setViewName("runners/editRunner");
+      modelAndView.addObject("runner", runner);
+      List<Team> teamList = teamDaoService.getAllTeams();
+      modelAndView.addObject("teams", teamList); // server-side validations are kind of sloppy :/ need to pass the same data back and forth to keep the same state
+      return modelAndView;
+    }
+
+    fileUploadService.RunnerFileUpload(file, runnerName);
+    modelAndView.setViewName("/runner");
+    modelAndView.addObject("runner", runner);
+    return modelAndView;
+  }
+
+  public static String addFileUploadValidations(MultipartFile file) {
+    int maxFileSize = 10485760; // set no maximum file size in application.properties, handle it here
+    String fileExtension = new String();
+    String[] allowedExtensions = {".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"};
+    List<String> extensionsList = Arrays.asList(allowedExtensions);
+
+    if (file.getSize() > maxFileSize) {
+      return "File must be less than 10 MB";
+    } else if (file.getOriginalFilename().isEmpty()){
+      return "Please chose a file AAA";
+    } else {
+      fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
+    }
+    if (!extensionsList.contains(fileExtension)){
+      return "The File must be one of the following: .jpg, .jpeg, .png";
+    }
+      return "";
 
   }
+
 }

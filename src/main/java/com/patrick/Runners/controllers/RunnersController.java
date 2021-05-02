@@ -1,6 +1,7 @@
 package com.patrick.Runners.controllers;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,18 +25,20 @@ import com.patrick.Runners.runner.Runner;
 import com.patrick.Runners.runner.RunnersDaoService;
 import com.patrick.Runners.teams.Team;
 import com.patrick.Runners.teams.TeamDaoService;
+import com.patrick.Runners.uploads.FileUploadController;
+import com.patrick.Runners.uploads.FileUploadService;
 
 @Controller
 public class RunnersController {
 
+  @Autowired
+  FileUploadService fileUploadService;
+
   RunnersDaoService runnersDaoService = new RunnersDaoService();
   TeamDaoService teamDaoService = new TeamDaoService();
 
-
   @RequestMapping("/")
   public String listRunner(Model model) {
-
-
     List<Runner> runnersList = runnersDaoService.getRunnersList();
     System.out.println(runnersList);
     runnersList.sort(Comparator.comparing(Runner::getFollowersCount).reversed());
@@ -50,13 +55,16 @@ public class RunnersController {
     model.addAttribute("runner",runner);
     System.out.println("redirecting to addRunner form");
     return "addRunner";
-
   }
 
   @PostMapping("/addRunner")
   @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
-  public ModelAndView submitAddRunnerForm(@ModelAttribute("runner") Runner runner) throws IOException, InterruptedException {
+  public ModelAndView submitAddRunnerForm(@ModelAttribute("runner") Runner runner,@RequestParam(name="file") MultipartFile file) throws IOException, InterruptedException {
     ModelAndView modelAndView = new ModelAndView();
+
+    String fileExtension= new String();
+    String[] allowedExtensions = {".png",".jpg",".jpeg"};
+    List<String> extensionsList = Arrays.asList(allowedExtensions);
 
     runner.setUsername(runner.getFirstName().toUpperCase() + "_" + runner.getLastName().toUpperCase());
 
@@ -66,6 +74,14 @@ public class RunnersController {
       modelAndView.setViewName("addRunner");
       return modelAndView;
     }
+
+    String fileUploadValidation = FileUploadController.addFileUploadValidations(file);
+    if (!fileUploadValidation.equals("")) {
+      modelAndView.addObject("error",fileUploadValidation);
+      modelAndView.setViewName("addRunner");
+      return modelAndView;
+    }
+
 
     if (runner.getInstagramHandle().equals("")){
       System.out.println("NOT FETCHING INSTAGRAM");
@@ -80,6 +96,20 @@ public class RunnersController {
       }
     }
 
+    if(!file.getOriginalFilename().isEmpty()){
+      fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
+      if(extensionsList.contains(fileExtension) && file.getSize()>0){
+        fileUploadService.RunnerFileUpload(file, runner.getUsername());
+      }else{
+        modelAndView.addObject("error", "The File must be one of the following: .jpg, .jpeg, .png");
+        modelAndView.setViewName("addRunner");
+        return modelAndView;
+      }
+    }else{
+      modelAndView.addObject("error","Please upload a picture");
+      modelAndView.setViewName("addRunner");
+      return modelAndView;
+    }
 
     saveRunner(runner);
     modelAndView.setViewName("addRunnerSuccess");
@@ -101,7 +131,6 @@ public class RunnersController {
     return modelAndView;
   }
 
-
   @GetMapping("/editRunnerForm")
   @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
   public ModelAndView showEditRunnerForm(String runnerName) {
@@ -116,7 +145,6 @@ public class RunnersController {
 
     System.out.println("redirecting to editRunner form");
     return modelAndView;
-
   }
 
   @PostMapping("/runners/addToTeam")

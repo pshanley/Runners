@@ -50,7 +50,7 @@
                                 <input type="submit" value="Add Runner">
                               </form>
                       </td>
-                      <td style="text-align:center;width: 20%"><img alt="" height=40  src=${runner.imageURL}></td>
+                      <td style="text-align:center;width: 20%"><img alt="" height=40  src="/uploads/${runner.username}"></td>
                       <td><a href="runners?username=${runner.username}">${runner.firstName} ${runner.lastName}</a></td>
                       <td><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></td>
                       <td>${runner.followersCount}</td>

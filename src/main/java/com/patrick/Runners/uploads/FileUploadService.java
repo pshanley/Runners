@@ -23,6 +23,10 @@ public class FileUploadService {
   public void TeamFileUpload(MultipartFile file, String team) throws IOException {
     String absolutePath = servletContext.getRealPath("/uploads/");
     file.transferTo(new File(absolutePath + team));
+  }
 
+  public void RunnerFileUpload(MultipartFile file, String runner) throws IOException {
+    String absolutePath = servletContext.getRealPath("/uploads/");
+    file.transferTo(new File(absolutePath + runner));
   }
 }
