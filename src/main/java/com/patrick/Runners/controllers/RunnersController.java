@@ -3,6 +3,7 @@ package com.patrick.Runners.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -59,14 +61,11 @@ public class RunnersController {
 
   @PostMapping("/addRunner")
   @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
-  public ModelAndView submitAddRunnerForm(@ModelAttribute("runner") Runner runner,@RequestParam(name="file") MultipartFile file) throws IOException, InterruptedException {
+  public ModelAndView submitAddRunnerForm(Principal user, @ModelAttribute("runner") Runner runner,@RequestParam(name="file") MultipartFile file) throws IOException, InterruptedException {
     ModelAndView modelAndView = new ModelAndView();
 
-    String fileExtension= new String();
-    String[] allowedExtensions = {".png",".jpg",".jpeg"};
-    List<String> extensionsList = Arrays.asList(allowedExtensions);
-
     runner.setUsername(runner.getFirstName().toUpperCase() + "_" + runner.getLastName().toUpperCase());
+    runner.setUserWhoAdded(user.getName());
 
     String runnerAdditionError = addRunnerValidations(runner);
     if(!runnerAdditionError.equals("")){
@@ -96,21 +95,7 @@ public class RunnersController {
       }
     }
 
-    if(!file.getOriginalFilename().isEmpty()){
-      fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
-      if(extensionsList.contains(fileExtension) && file.getSize()>0){
-        fileUploadService.RunnerFileUpload(file, runner.getUsername());
-      }else{
-        modelAndView.addObject("error", "The File must be one of the following: .jpg, .jpeg, .png");
-        modelAndView.setViewName("addRunner");
-        return modelAndView;
-      }
-    }else{
-      modelAndView.addObject("error","Please upload a picture");
-      modelAndView.setViewName("addRunner");
-      return modelAndView;
-    }
-
+    fileUploadService.RunnerFileUpload(file, runner.getUsername());
     saveRunner(runner);
     modelAndView.setViewName("addRunnerSuccess");
     return modelAndView;

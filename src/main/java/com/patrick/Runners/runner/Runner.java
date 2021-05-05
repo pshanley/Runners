@@ -3,6 +3,7 @@ package com.patrick.Runners.runner;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.transaction.Transactional;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
+import com.patrick.Runners.auth.User;
 import com.patrick.Runners.teams.Team;
 
+//@TypeDef(name = "user", typeClass = User.class)
 @Entity
 @Transactional
 public class Runner implements Serializable {
@@ -25,6 +31,8 @@ public class Runner implements Serializable {
   private String instagramHandle;
   private String username; //FIRST_LAST
   private int followersCount;
+
+  private String userWhoAdded; // don't feel like setting up a "User" type, will keep as a string for now
 
   @Column(name="imageurl", columnDefinition="BLOB")
   private String imageURL;
@@ -110,5 +118,13 @@ public class Runner implements Serializable {
 
   public void setTeam(Team team) {
     this.team = team;
+  }
+
+  public String getUserWhoAdded(){
+    return userWhoAdded;
+  }
+
+  public void setUserWhoAdded(String user){
+    this.userWhoAdded = user;
   }
 }

@@ -45,13 +45,8 @@ public class AuthDaoService implements UserDao{
   }
   // This runs when someone tries to login
 
-  private List<User> getApplicationUsers(){
+  public List<User> getApplicationUsers(){
     List<User> applicationUsers =  userRepository.findAll();
-    System.out.println("Found the following users: ");
-    for(User user : applicationUsers){
-      System.out.println(user.getUsername());
-    }
-
     return applicationUsers;
 
   }
