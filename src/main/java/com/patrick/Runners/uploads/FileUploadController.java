@@ -44,7 +44,7 @@ public class FileUploadController {
 
     }
 
-    fileUploadService.TeamFileUpload(file, team.getTeamName());
+    fileUploadService.FileUpload(file, team.getTeamName());
     modelAndView.setViewName("/teams/team");
     modelAndView.addObject("team", team);
     return modelAndView;
@@ -68,7 +68,9 @@ public class FileUploadController {
       return modelAndView;
     }
 
-    fileUploadService.RunnerFileUpload(file, runnerName);
+    fileUploadService.FileUpload(file, runnerName);
+    //FileUploadService fileUploadService1 = new FileUploadService();
+    //fileUploadService1.RunnerFileUpload(file,runnerName);
     modelAndView.setViewName("/runner");
     modelAndView.addObject("runner", runner);
     return modelAndView;

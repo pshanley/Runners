@@ -3,7 +3,6 @@ package com.patrick.Runners.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -95,7 +94,7 @@ public class RunnersController {
       }
     }
 
-    fileUploadService.RunnerFileUpload(file, runner.getUsername());
+    fileUploadService.FileUpload(file, runner.getUsername());
     saveRunner(runner);
     modelAndView.setViewName("addRunnerSuccess");
     return modelAndView;

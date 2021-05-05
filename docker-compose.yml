@@ -13,6 +13,7 @@ services:
       - ./cypress/cookies/:/usr/local/runners/cookies/
       - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./src/main/webapp/uploads/:/usr/local/runners/uploads/ # files written on local docker will end up in local the app's uploads folder which is excluded from the war
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - JAVA_TOOL_OPTIONS= -agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n

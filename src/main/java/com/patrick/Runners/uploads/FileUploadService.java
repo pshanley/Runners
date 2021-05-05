@@ -7,8 +7,11 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.patrick.Runners.SpringContextUtil;
 
 @Service
 public class FileUploadService {
@@ -19,14 +22,32 @@ public class FileUploadService {
   @Autowired
   private ServletContext servletContext;
 
+  private String currentProfile;
 
-  public void TeamFileUpload(MultipartFile file, String team) throws IOException {
-    String absolutePath = servletContext.getRealPath("/uploads/");
-    file.transferTo(new File(absolutePath + team));
+  public FileUploadService(){
+    ApplicationContext applicationContext = SpringContextUtil.getApplicationContext();
+    Environment env = applicationContext.getEnvironment();
+     this.currentProfile = env.getActiveProfiles()[0];
   }
 
-  public void RunnerFileUpload(MultipartFile file, String runner) throws IOException {
+
+  public void FileUpload(MultipartFile file, String name) throws IOException {
+    String prodFileBackupPath = "/usr/local/runners/uploads/";
     String absolutePath = servletContext.getRealPath("/uploads/");
-    file.transferTo(new File(absolutePath + runner));
+    checkAndCreateDirectory(absolutePath);
+
+    if(this.currentProfile.equals("prod")){
+      file.transferTo(new File(prodFileBackupPath + name)); // this has to go before the upload before... getting a "file not found" tomcat exception
+    }
+    file.transferTo(new File(absolutePath + name));
+
+
+  }
+
+  public void checkAndCreateDirectory(String path){
+    File directory = new File(path);
+    if (!directory.exists()){
+      directory.mkdir();
+    }
   }
 }

@@ -122,7 +122,15 @@
 					<finalName>runners</finalName>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.1</version>
+				<configuration>
+					<warSourceExcludes>uploads/**</warSourceExcludes>
+				</configuration>
+			</plugin>
 		</plugins>
+
 	</build>
 	<profiles>
 		<profile>
