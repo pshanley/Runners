@@ -1,8 +1,3 @@
-#FROM openjdk:11
-#ADD target/runners-mysql.jar runners-mysql.jar
-#EXPOSE 8080
-#ENTRYPOINT ["java","-jar","runners-mysql.jar"]
-
 FROM tomcat:latest
 ADD target/runners.war /usr/local/tomcat/webapps/runners.war
 COPY wait-for-it.sh wait-for-it.sh

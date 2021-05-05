@@ -12,6 +12,7 @@ services:
       - ./cookies/:/usr/local/runners/cookies/
       - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
       - /var/run/docker.sock:/var/run/docker.sock # connect to docker daemon from inside container
+      - ./uploads:/usr/local/runners/uploads/ # /usr/local/runners/uploads on host
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     command: ./wait-for-it.sh mysql-standalone:3306 -t 60 -- catalina.sh run
