@@ -11,17 +11,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.patrick.Runners.instagram.GenerateCookies;
 import com.patrick.Runners.instagram.GetInstagramDetails;
+import com.patrick.Runners.runner.DailyFollowerCount;
+import com.patrick.Runners.runner.DailyFollowerDaoService;
 import com.patrick.Runners.runner.Runner;
 import com.patrick.Runners.runner.RunnersDaoService;
 import com.patrick.Runners.teams.Team;
@@ -34,6 +43,8 @@ public class RunnersController {
 
   @Autowired
   FileUploadService fileUploadService;
+
+  DailyFollowerDaoService dailyFollowerDaoService = new DailyFollowerDaoService();
 
   RunnersDaoService runnersDaoService = new RunnersDaoService();
   TeamDaoService teamDaoService = new TeamDaoService();
@@ -88,8 +99,8 @@ public class RunnersController {
       if(c1.equals('@')){ // remove "@" from instagram handle if a user adds it
         runner.setInstagramHandle(runner.getInstagramHandle().substring(1));
       }
-      boolean instagramRequestSuccess = GetInstagramDetails.getInstagramDetails(runner);
-      if(!instagramRequestSuccess){
+      int instagramRequestSuccess = GetInstagramDetails.getInstagramDetails(runner);
+      if(instagramRequestSuccess == -1){
         modelAndView.addObject("error","unable to connect to this runners's instagram");
       }
     }
@@ -111,6 +122,13 @@ public class RunnersController {
     System.out.println(runner.getInstagramHandle());
     ModelAndView modelAndView = new ModelAndView("runner");
     modelAndView.addObject("runner",runner);
+
+    List<Map<LocalDate,Integer>> listOfFollowerCounts = getMapOfDailyFollowers(runner);
+
+    modelAndView.addObject("dataPoints", listOfFollowerCounts);
+
+
+
 
     return modelAndView;
   }
@@ -206,6 +224,23 @@ public class RunnersController {
 
   }
 
+
+  public List<Map<LocalDate,Integer>> getMapOfDailyFollowers(Runner runner) {
+    List<DailyFollowerCount> listCounts = dailyFollowerDaoService.getFollowerCounts(runner); // list of Daily objects
+    List<Map<LocalDate,Integer>> dailyListMap = new ArrayList<>();
+    for (DailyFollowerCount l : listCounts) {
+      Map<LocalDate,Integer> newMap = new HashMap<LocalDate,Integer>();
+      //newMap.put(l.getDate(),l.getNumberOfFollowers());
+      dailyListMap.add(newMap);
+
+    }
+    return dailyListMap; // returns an arraylist of Hashmaps with LocalDate -> Integer
+
+  }
+
+
+
+
   @GetMapping("/runCypress") // secret Cypress test endpoint
   @PreAuthorize("hasAnyAuthority('ADMIN','CONTRIBUTOR')")
   public ModelAndView runCypress() throws IOException, InterruptedException {
@@ -213,5 +248,33 @@ public class RunnersController {
     System.out.println("cypress would be running");
     return new ModelAndView("redirect:/");
   }
+
+  @RequestMapping("/getgraph")
+  public String showHome(){
+
+    return "graph";
+  }
+
+  @RequestMapping("/linechartdata")
+  @ResponseBody
+  public String getDataFromDB(@RequestParam String name){
+    Runner runner = runnersDaoService.getSingleRunner(name);
+    List<DailyFollowerCount> listCounts = dailyFollowerDaoService.getFollowerCounts(runner); // list of Daily objects
+
+    JsonArray jsonDate = new JsonArray();
+    JsonArray jsonFollowers = new JsonArray();
+    JsonObject json = new JsonObject();
+    listCounts.forEach(data->{
+          jsonDate.add(data.getDate().toString());
+          jsonFollowers.add(data.getNumberOfFollowers());
+        }
+    );
+
+    json.add("date",jsonDate);
+    json.add("followers", jsonFollowers);
+    return json.toString();
+
+  }
+
 
 }

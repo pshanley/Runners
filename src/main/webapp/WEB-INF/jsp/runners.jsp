@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Contact List - Spring Boot Web Application Example</title>
+<title>List of Professional Runners</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -21,20 +21,20 @@
         <tr>
             <td style="text-align:center;width: 20%"><img alt="" height=40  src="/uploads/${runner.username}" ></td>
             <td><a href="runners?username=${runner.username}">${runner.firstName} ${runner.lastName}</a></td>
-            <td><a href="https://www.instagram.com/${runner.instagramHandle}">${runner.instagramHandle}</a></td>
+            <td><a href="https://www.instagram.com/${runner.instagramHandle}" target="_blank" rel="noreferrer noopener">${runner.instagramHandle}</a></td>
             <td>${runner.followersCount}</td>
-           <td>${runner.team.teamName}</td>
+            <td style="text-align:center;width: 20%"><a href="teams?teamName=${runner.team.teamName}"><img alt="" height=40  src="/uploads/${runner.team.teamName}"></a></td>
         </tr>
         </c:forEach>
     </table><br><br>
 
     <form align="center" action="/addRunnerForm">
-        <input type="submit" value="Add A Runner" />
+        <input type="submit" value="Add A Runner" class="button" />
     </form><br>
     <form align="center" action="/registerUserForm">
-        <input type="submit" value="Become a Contributor" />
+        <input type="submit" value="Become A Contributor" class="button" />
     </form><br>
     <form action="/teams" style="text-align: center">
-        <input type="submit" value="View Teams"  />
+        <input type="submit" value="View Teams" class="button" />
     </form>
 </body>

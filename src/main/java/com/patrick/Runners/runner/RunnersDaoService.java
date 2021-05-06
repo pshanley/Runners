@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class RunnersDaoService {
 
   private ApplicationContext context;
+
   @Autowired
   public static RunnerRepository repo;
 
@@ -29,7 +30,6 @@ public class RunnersDaoService {
 
   public static void saveRunner(Runner runner){
     System.out.println("tryint to store a runner to RDBMS");
-
     repo.save(runner);
     System.out.println("saved the following Runner to RDBMS: " + runner.getUsername());
   }

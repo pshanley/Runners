@@ -31,6 +31,6 @@
 
 
     <form action="/" style="text-align: center">
-        <input type="submit" value="Home"  />
+        <input type="submit" value="Home" class="button" />
     </form>
 </body>

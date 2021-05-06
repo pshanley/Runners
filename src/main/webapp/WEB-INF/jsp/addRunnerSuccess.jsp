@@ -5,6 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Runner Successfully Added</title>
+<link rel="stylesheet" href="styles.css">
 <style type="text/css">
     span {
         display: inline-block;
@@ -27,13 +28,13 @@
 
     <form action="/editRunnerForm" align="center">
         <input type="hidden" name="runnerName" value=${runner.username}>
-        <input type="submit" value="Add ${runner.firstName} to a Team" />
+        <input type="submit" value="Add ${runner.firstName} to a Team" class="button"/>
     </form><br>
     <form action="/" align="center" >
-        <input type="submit" value="View Runners" />
+        <input type="submit" value="View Runners" class="button"/>
     </form><br>
     <form align="center" action="/addRunnerForm" >
-        <input type="submit" value="Add Another Runner" />
+        <input type="submit" value="Add Another Runner" class="button"/>
     </form>
 
 </body>

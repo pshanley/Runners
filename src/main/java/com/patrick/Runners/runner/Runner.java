@@ -25,6 +25,7 @@ public class Runner implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name="runner_id")
   private Long id;
   private String firstName;
   private String lastName;
@@ -44,6 +45,11 @@ public class Runner implements Serializable {
   private Team team;
 
   public Runner() {
+  }
+
+  public Runner(String firstName, String lastName){
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
 
   public Runner(String firstName, String lastName, String instagramHandle) {
@@ -126,5 +132,13 @@ public class Runner implements Serializable {
 
   public void setUserWhoAdded(String user){
     this.userWhoAdded = user;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 }

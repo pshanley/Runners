@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" href="/styles.css">
 <title>Runner Successfully Added</title>
 <style type="text/css">
     span {
@@ -21,7 +22,7 @@
     </div><br><br>
 
     <form action="/" align="center" >
-        <input type="submit" value="Home" />
+        <input type="submit" value="Home" class="button" />
     </form><br>
 
 
