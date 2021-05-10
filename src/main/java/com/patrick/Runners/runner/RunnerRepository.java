@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RunnerRepository extends CrudRepository<Runner, Long> {
+public interface RunnerRepository extends PagingAndSortingRepository<Runner, Long> {
   List<Runner> findAll();
 
   @Query("SELECT r FROM Runner r where r.username = ?1")

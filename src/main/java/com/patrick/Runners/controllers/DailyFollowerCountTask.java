@@ -19,7 +19,7 @@ public class DailyFollowerCountTask {
 
   @Scheduled(cron="0 1 0 * * ?") // Every day at this GMT
   public void storeDailyFollowerCount() throws IOException, InterruptedException {
-    List<Runner> runnersList = RunnersDaoService.getRunnersList();
+    List<Runner> runnersList = RunnersDaoService.getAllRunners();
     for (Runner r : runnersList) {
       if (r.getInstagramHandle() != null && !r.getInstagramHandle().isEmpty()) {
         System.out.println(r.getUsername());
