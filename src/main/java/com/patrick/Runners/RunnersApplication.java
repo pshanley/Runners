@@ -16,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.google.common.collect.Lists;
@@ -26,6 +27,7 @@ import com.patrick.Runners.runner.RunnersDaoService;
 import com.patrick.Runners.teams.Team;
 
 @SpringBootApplication
+@EnableScheduling
 public class RunnersApplication extends SpringBootServletInitializer {
 
 	private static PasswordEncoder passwordEncoder;
@@ -55,7 +57,7 @@ public class RunnersApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 
-		ApplicationContext ctx = SpringApplication.run(RunnersApplication.class, args);
+		SpringApplication.run(RunnersApplication.class, args);
 
 
 

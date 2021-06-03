@@ -42,11 +42,11 @@
         </form:form><br>
 
         <form action="/teams" style="text-align: center">
-            <input type="submit" value="Back to Teams"  />
+            <input type="submit" value="Back to Teams" class="button" />
         </form><br>
 
         <form action="/" style="text-align: center">
-            <input type="submit" value="Home"  />
+            <input type="submit" value="Home" class="button" />
         </form>
     </div>
 </body>

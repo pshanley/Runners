@@ -6,6 +6,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Add a Runner</title>
+<link rel="stylesheet" href="/styles.css">
 <style type="text/css">
     label {
         display: inline-block;
@@ -26,8 +27,21 @@
     }
 
     button {
-        padding: 10px;
-        margin: 10px;
+
+          display:inline-block;
+          padding:0.4em 2em;
+          border:0.16em solid #0096FF;
+          background-color: #FFFFFF;
+          margin:0 0.2em 0.2em 0;
+          box-sizing: border-box;
+          text-decoration:none;
+          color:#000000;
+          text-align:center;
+          border-radius: 4px;
+          cursor: pointer;
+    }
+    button:hover{
+      box-shadow: 0px 0px 0px 2px #0047AB;
     }
 </style>
 </head>
@@ -48,16 +62,17 @@
             <label for="file">Upload Picture</label>
            	<input type="file" name="file" />
 
-           	<input type="hidden" name="teamName" value="${team.teamName}"/>
+           	<input type="hidden" name="teamName" value="${team.teamName}" class="button"/>
            	<br><br>
 
             <span style="color:red">${error}</span><br>
 
             <form:button>Add Runner</form:button>
-        </form:form>
-            <form action="/" style="text-align: center">
-                <input type="submit" value="Back to Runners"  />
-            </form>
+        </form:form><br>
+
+        <form action="/" style="text-align: center">
+            <input type="submit" value="Back to Runners"  class="button"/>
+        </form>
     </div>
 </body>
 </html>

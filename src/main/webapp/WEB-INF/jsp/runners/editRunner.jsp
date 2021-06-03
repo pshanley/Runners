@@ -63,10 +63,10 @@
         </table><br><br>
 
     <form action="/" align="center" >
-        <input type="submit" value="Back to Runners" />
+        <input type="submit" value="Back to Runners" class="button"/>
     </form><br>
     <form align="center" action="/addRunnerForm" >
-        <input type="submit" value="Add Another Runner" />
+        <input type="submit" value="Add Another Runner" class="button"/>
     </form>
     <form align="center" action="/runners/delete" method="POST">
          <input type="hidden" name="runnerName" value="${runner.username}"><br>

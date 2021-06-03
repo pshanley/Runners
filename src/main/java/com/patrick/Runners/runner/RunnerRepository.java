@@ -17,4 +17,5 @@ public interface RunnerRepository extends CrudRepository<Runner, Long> {
   @Query("SELECT r FROM Runner r where r.instagramHandle = ?1")
   Runner findByInstagramHandle(String instagramHandle);
 
+
 }

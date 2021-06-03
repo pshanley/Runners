@@ -19,14 +19,18 @@
         <span>Team Name:</span><span>${team.teamName}</span><br/>
     </div><br><br>
 
+    <form align="center" action="/showEditTeamForm">
+       <input type="hidden" name="teamName" value="${team.teamName}" class="button"/>
+       <input type="submit" value="Edit Team" />
+    </form><br>
     <form action="/teams" align="center" >
-        <input type="submit" value="View Teams" />
+        <input type="submit" value="View Teams" class="button"/>
     </form><br>
     <form align="center" action="/addTeamForm" >
-        <input type="submit" value="Add Another Team" />
+        <input type="submit" value="Add Another Team" class="button"/>
     </form><br>
     <form align="center" action="/" >
-        <input type="submit" value="Home" />
+        <input type="submit" value="Home" class="button"/>
     </form><br>
 
 

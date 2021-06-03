@@ -85,7 +85,7 @@ public class FileUploadController {
     if (file.getSize() > maxFileSize) {
       return "File must be less than 10 MB";
     } else if (file.getOriginalFilename().isEmpty()){
-      return "Please chose a file AAA";
+      return "Please choose a file.";
     } else {
       fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
     }

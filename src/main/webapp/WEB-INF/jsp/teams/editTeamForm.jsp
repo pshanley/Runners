@@ -60,12 +60,12 @@
 
 
         <form action="/teams/saveTeamChanges" method="POST">
-          <input type="submit" value="Submit">
+          <input type="submit" value="Submit" class="button-submit" >
         </form><br>
 
         <form action="/teams" style="text-align: center">
         <input type="hidden" name="teamName" value="${team.teamName}" />
-            <input type="submit" value="Reset"  />
+            <input type="submit" value="Reset" class="button" />
         </form><br>
 
         <h3>Change Picture</h3>
@@ -82,10 +82,10 @@
         <form align="center" action="/teams/delete" method="POST">
                 <input type="hidden" name="teamName" value="${team.teamName}"><br>
                 <input type="submit" value="Delete Team" class="button-red"/>
-        </form> <br><br><br>
+        </form> <br>
 
           <form action="/" style="text-align: center">
-                    <input type="submit" value="Home"  />
+                    <input type="submit" value="Home" class="button" />
           </form><br>
 
     </div>

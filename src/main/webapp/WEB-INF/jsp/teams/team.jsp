@@ -32,15 +32,15 @@
 
     <form align="center" action="/showEditTeamForm">
        <input type="hidden" name="teamName" value="${team.teamName}" />
-       <input type="submit" value="Edit Team" />
+       <input type="submit" value="Edit Team" class="button"/>
     </form><br>
 
     <form align="center" action="/addTeamForm">
-       <input type="submit" value="Add a Team" />
+       <input type="submit" value="Add a Team" class="button"/>
     </form><br>
 
     <form align="center" action="/">
-        <input type="submit" value="Back to Home" />
+        <input type="submit" value="Back to Home" class="button"/>
     </form><br>
 
 </body>
