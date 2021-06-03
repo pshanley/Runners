@@ -1,7 +1,6 @@
 package com.patrick.Runners.runner.test;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.tomcat.jni.Local;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -90,7 +90,7 @@ public class RunnersTest {
     ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(RunnersApplication.class);
     RunnersDaoService runnersDaoService = configurableApplicationContext.getBean(RunnersDaoService.class);
     DailyFollowerDaoService dailyFollowerDaoService = configurableApplicationContext.getBean(DailyFollowerDaoService.class);
-    List<Runner> runnersList = RunnersDaoService.getRunnersList();
+    List<Runner> runnersList = RunnersDaoService.getAllRunners();
     for(Runner r: runnersList){
       if(r.getInstagramHandle() != null){
         System.out.println(r.getUsername());
@@ -110,7 +110,7 @@ public class RunnersTest {
     ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(RunnersApplication.class);
     RunnersDaoService runnersDaoService = configurableApplicationContext.getBean(RunnersDaoService.class);
     DailyFollowerDaoService dailyFollowerDaoService = configurableApplicationContext.getBean(DailyFollowerDaoService.class);
-    List<Runner> runnersList = RunnersDaoService.getRunnersList();
+    List<Runner> runnersList = RunnersDaoService.getAllRunners();
 
     String s = "2021-05-08";
     String e = "2021-05-31";
@@ -146,6 +146,40 @@ public class RunnersTest {
     List<Map<LocalDate,Integer>> map = controller.getMapOfDailyFollowers(runner);
 
   }
+
+  @Test
+  public void NumberOfPages(){
+    // less runners than paging size, should be 1 page
+    int numberOfPages = RunnersDaoService.getNumberOfPages(10,20);
+    Assert.assertEquals(1,numberOfPages);
+
+    // same number of runners as page size, should be 1
+     numberOfPages = RunnersDaoService.getNumberOfPages(20,20);
+    Assert.assertEquals(1,numberOfPages);
+
+    // more runners than page size
+    numberOfPages = RunnersDaoService.getNumberOfPages(41,20);
+    Assert.assertEquals(3,numberOfPages);
+
+  }
+
+  @Test
+  public void currentRunners(){
+    String currentRunners = RunnersDaoService.getCurrentRunners(9, 0, 10);
+    Assert.assertEquals("1 - 9", currentRunners);
+
+    currentRunners = RunnersDaoService.getCurrentRunners(9, 0, 5);
+    Assert.assertEquals("1 - 5", currentRunners);
+
+    currentRunners = RunnersDaoService.getCurrentRunners(9, 1, 5);
+    Assert.assertEquals("6 - 9", currentRunners);
+
+    currentRunners = RunnersDaoService.getCurrentRunners(15, 1, 5);
+    Assert.assertEquals("6 - 10", currentRunners);
+
+  }
+
+
 
 
 }

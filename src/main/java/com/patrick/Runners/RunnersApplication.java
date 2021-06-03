@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -62,25 +61,6 @@ public class RunnersApplication extends SpringBootServletInitializer {
 
 
 	}
-
-	public static void createTeamWithExistingRunners(){
-		List<Runner> runnersList = runnersService.getRunnersList();
-		HashMap<String, Runner> runnersMap = new HashMap<String, Runner>();
-		for(Runner r: runnersList){
-			runnersMap.put(r.getUsername(),r);
-		}
-		Runner galen = runnersMap.get("GALEN_RUPP");
-		Runner mo = runnersMap.get("MO_FARAH");
-
-		List<Runner> athletesOnTeam = new ArrayList<>();
-		athletesOnTeam.add(galen);
-		athletesOnTeam.add(mo);
-		Team nop = new Team("Nike Oregon Project");
-		nop.setAthletes(athletesOnTeam);
-		System.out.println(nop.getAthletes());
-
-	}
-
 
 	public static List<Role> createRoles(){
 		List<Role> roles = Lists.newArrayList(

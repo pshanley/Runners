@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,12 +49,19 @@ public class RunnersController {
   TeamDaoService teamDaoService = new TeamDaoService();
 
   @RequestMapping("/")
-  public String listRunner(Model model) {
-    List<Runner> runnersList = runnersDaoService.getRunnersList();
+  public String listRunner(Model model, @RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "25") Integer pageSize, @RequestParam(defaultValue = "followersCount") String sortBy) {
+    List<Runner> runnersList = runnersDaoService.getRunnersPaged(pageNo,pageSize,sortBy);
     System.out.println(runnersList);
-    runnersList.sort(Comparator.comparing(Runner::getFollowersCount).reversed());
+    //runnersList.sort(Comparator.comparing(Runner::getFollowersCount).reversed());
     System.out.println("Type of List Object: " + runnersList.getClass());
+    Long numberOfRunners = runnersDaoService.getNumberOfRunners();
+    int numberOfPages = runnersDaoService.getNumberOfPages(numberOfRunners,pageSize);
+    String currentViewedRunnersString = runnersDaoService.getCurrentRunners(numberOfRunners, pageNo, pageSize);
+    model.addAttribute("numberOfRunners", numberOfRunners);
+    model.addAttribute("currentViewedRunners", currentViewedRunnersString);
+    model.addAttribute("currentPage", pageNo);
     model.addAttribute("runners", runnersList);
+    model.addAttribute("numberOfPages", numberOfPages);
 
     return "runners";
   }

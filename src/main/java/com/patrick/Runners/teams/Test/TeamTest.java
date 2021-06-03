@@ -129,7 +129,7 @@ public class TeamTest {
     TeamRepository teamRepository = configurableApplicationContext.getBean(TeamRepository.class);
     RunnerRepository runnerRepository = configurableApplicationContext.getBean(RunnerRepository.class);
     RunnersDaoService runnersService = new RunnersDaoService();
-    List<Runner> runnersList = runnersService.getRunnersList();
+    List<Runner> runnersList = runnersService.getAllRunners();
 
     HashMap<String, Runner> runnersMap = new HashMap<String, Runner>();
     for(Runner r: runnersList){
